@@ -20,15 +20,26 @@ const typeDefs = gql`
   # clients can execute, along with the return type for each. In this
   # case, the "books" query returns an array of zero or more Books (defined above).
   type Query {
-    getBooks(id: ID): Book
+    getBookById(id: ID): Book
+    getBooksByTitle(title: String): [Book]
     books: [Book]
   }
 `
 
 const query = {
-  getBooks: async (parent: any, args: { id: string }, context: any) => {
+  getBookById: async (parent: any, args: { id: string }, context: any) => {
     const books = await prisma.books.findUnique({
       where: { id: Number(args.id) },
+    })
+    return books
+  },
+  getBooksByTitle: async (
+    parent: any,
+    args: { title: string },
+    context: any
+  ) => {
+    const books = await prisma.books.findMany({
+      where: { title: args.title },
     })
     return books
   },
