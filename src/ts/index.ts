@@ -3,23 +3,31 @@ import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core'
 import express from 'express'
 import http from 'http'
 import { PrismaClient } from '@prisma/client'
+import bcrypt from 'bcrypt'
 
 const prisma = new PrismaClient()
 const PORT = 4000
 const typeDefs = gql`
-  # Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
-
-  # This "Book" type defines the queryable fields for every book in our data source.
   type Book {
     id: Int
     title: String
     author: String
   }
 
-  # The "Query" type is special: it lists all of the available queries that
-  # clients can execute, along with the return type for each. In this
-  # case, the "books" query returns an array of zero or more Books (defined above).
+  type User {
+    id: Int
+    nickname: String
+    email: String
+    password: String
+  }
+
+  type Auth {
+    isSuccess: Boolean
+    message: String
+  }
+
   type Query {
+    authUser(email: String): Auth
     getBookById(id: ID): Book
     getBooksByTitle(title: String): [Book]
     books: [Book]
@@ -27,6 +35,15 @@ const typeDefs = gql`
 `
 
 const query = {
+  authUser: async (parent: any, args: { email: string }, context: any) => {
+    const user = await prisma.users.findUnique({
+      where: {
+        email: args.email,
+      },
+    })
+    console.log(user)
+    return { isSuccess: true, message: 'success' }
+  },
   getBookById: async (parent: any, args: { id: string }, context: any) => {
     const books = await prisma.books.findUnique({
       where: { id: Number(args.id) },

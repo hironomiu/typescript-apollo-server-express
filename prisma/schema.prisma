@@ -12,3 +12,10 @@ model books {
   title  String @db.VarChar(10)
   author String @db.VarChar(10)
 }
+
+model users {
+  id       Int    @id @default(autoincrement()) @db.UnsignedInt
+  nickname String @db.VarChar(100)
+  email    String @unique(map: "email") @db.VarChar(100)
+  password String @db.VarChar(100)
+}
