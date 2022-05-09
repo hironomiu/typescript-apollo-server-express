@@ -27,7 +27,7 @@ const typeDefs = gql`
   }
 
   type Query {
-    authUser(email: String): Auth
+    authUser(email: String, password: String): Auth
     getBookById(id: ID): Book
     getBooksByTitle(title: String): [Book]
     books: [Book]
@@ -35,14 +35,30 @@ const typeDefs = gql`
 `
 
 const query = {
-  authUser: async (parent: any, args: { email: string }, context: any) => {
+  // TODO: 認証処理の確認
+  authUser: async (
+    parent: any,
+    args: { email: string; password: string },
+    context: any
+  ) => {
     const user = await prisma.users.findUnique({
       where: {
         email: args.email,
       },
     })
-    console.log(user)
-    return { isSuccess: true, message: 'success' }
+    if (!user) {
+      return { isSuccess: false, message: 'error' }
+    }
+    const isValid = await new Promise((resolve, reject) =>
+      bcrypt.compare(args.password, user.password, (err, isValid) => {
+        resolve(isValid)
+      })
+    )
+    if (isValid) {
+      return { isSuccess: true, message: 'success' }
+    }
+
+    return { isSuccess: false, message: 'error' }
   },
   getBookById: async (parent: any, args: { id: string }, context: any) => {
     const books = await prisma.books.findUnique({
