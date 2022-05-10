@@ -50,6 +50,7 @@ const mutation = {
     context: { req: any; res: Response }
   ) => {
     console.log(args.email, args.password)
+    console.log('context:', context.req.session)
 
     const user = await prisma.users.findUnique({
       where: {
