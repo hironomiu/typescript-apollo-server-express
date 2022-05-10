@@ -1,7 +1,8 @@
 import { ApolloServer, gql } from 'apollo-server-express'
 import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core'
 import express, { Request, Response } from 'express'
-import http, { request } from 'http'
+import http from 'http'
+import cors from 'cors'
 import { PrismaClient } from '@prisma/client'
 import bcrypt from 'bcrypt'
 import session from 'express-session'
@@ -44,9 +45,12 @@ const mutation = {
   signIn: async (
     parent: any,
     args: { email: string; password: string },
-    context: { req: Request; res: Response }
+    // TODO: 型
+    context: { req: any; res: Response }
   ) => {
-    console.log(context.req, args.email, args.password)
+    console.log(context.req.session, args.email, args.password)
+    context.res.cookie('test', 'testtest')
+    context.req.session.userId = 'hoge'
     return { isSuccess: false, message: 'error' }
   },
 }
@@ -95,6 +99,7 @@ const query = {
     return books
   },
   books: async () => {
+    console.log('called')
     const books = await prisma.books.findMany()
     return books
   },
@@ -106,6 +111,17 @@ const resolvers = {
 }
 
 const app = express()
+
+// app.use(
+//   cors({
+//     origin: [
+//       'http://localhost:3001',
+//       'https://studio.apollographql.com/sandbox/explorer',
+//     ],
+//     // credentials: true,
+//     optionsSuccessStatus: 200,
+//   })
+// )
 
 app.use(
   session({
@@ -121,6 +137,10 @@ app.use(
 
 const httpServer = http.createServer(app)
 
+const corsOptions = {
+  origin: ['http://localhost:3001', 'https://studio.apollographql.com'],
+}
+
 ;(async () => {
   const server = new ApolloServer({
     typeDefs,
@@ -129,7 +149,7 @@ const httpServer = http.createServer(app)
     context: ({ req, res }) => ({ req, res }),
   })
   await server.start()
-  server.applyMiddleware({ app })
+  server.applyMiddleware({ app, cors: corsOptions })
   console.log(server.graphqlPath)
 })()
 
