@@ -24,20 +24,21 @@ const typeDefs = gql`
     password: String
   }
 
-  type Auth {
+  type AuthMessage {
     isSuccess: Boolean
     message: String
   }
 
   type Query {
-    authUser(email: String, password: String): Auth
+    authUser(email: String, password: String): AuthMessage
     getBookById(id: ID): Book
     getBooksByTitle(title: String): [Book]
     books: [Book]
   }
 
   type Mutation {
-    signIn(email: String, password: String): Auth
+    signIn(email: String, password: String): AuthMessage
+    signOut: AuthMessage
   }
 `
 
@@ -48,10 +49,45 @@ const mutation = {
     // TODO: 型
     context: { req: any; res: Response }
   ) => {
-    console.log(context.req.session, args.email, args.password)
-    context.res.cookie('test', 'testtest')
-    context.req.session.userId = 'hoge'
+    console.log(args.email, args.password)
+
+    const user = await prisma.users.findUnique({
+      where: {
+        email: args.email,
+      },
+    })
+
+    if (!user) {
+      return { isSuccess: false, message: 'error' }
+    }
+    const isValid = await new Promise((resolve, reject) =>
+      bcrypt.compare(args.password, user.password, (err, isValid) => {
+        if (err) reject(err)
+        resolve(isValid)
+      })
+    )
+
+    console.log(user)
+
+    if (isValid) {
+      // context.req.session.regenerate()
+      context.req.session.id = user.id
+      context.req.session.nickname = user.nickname
+      context.res.cookie('hoge', 'hogehoge')
+      return { isSuccess: true, message: 'success' }
+    }
+
     return { isSuccess: false, message: 'error' }
+  },
+  signOut: (
+    parent: any,
+    args: { email: string; password: string },
+    // TODO: 型
+    context: { req: any; res: Response }
+  ) => {
+    context.req.session.destroy()
+    context.res.clearCookie('session')
+    return { isSuccess: true, message: 'signOuted' }
   },
 }
 
@@ -62,7 +98,8 @@ const query = {
     args: { email: string; password: string },
     context: any
   ) => {
-    console.log('req:', context.req)
+    console.log('called')
+
     const user = await prisma.users.findUnique({
       where: {
         email: args.email,
@@ -104,13 +141,12 @@ const query = {
     args: any,
     context: { req: any; res: Response }
   ) => {
+    const books = await prisma.books.findMany()
     console.log('called')
     console.log(context.req.session)
     context.req.session.userId = 'hoge'
     console.log(context.req.session)
     context.res.cookie('hoge', 'hogehoge')
-    const books = await prisma.books.findMany()
-
     return books
   },
 }
