@@ -98,9 +98,18 @@ const query = {
     })
     return books
   },
-  books: async () => {
+  // 仮で動作確認のためsession設定、cookieレスポンス
+  books: async (
+    parent: any,
+    args: any,
+    context: { req: any; res: Response }
+  ) => {
     console.log('called')
+    console.log(context.req.session)
+    context.req.session.userId = 'hoge'
+    context.res.cookie('hoge', 'hogehoge')
     const books = await prisma.books.findMany()
+
     return books
   },
 }
