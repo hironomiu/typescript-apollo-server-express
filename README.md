@@ -50,8 +50,8 @@ npx tsc --init
 ```
 
 ```
-npm install apollo-server-express apollo-server-core express graphql bcrypt
-npm install --save-dev @types/bcrypt
+npm install apollo-server-express apollo-server-core express graphql bcrypt express-session
+npm install --save-dev @types/bcrypt @types/express-session
 ```
 
 ```

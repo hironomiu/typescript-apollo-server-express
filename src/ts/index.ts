@@ -1,12 +1,14 @@
 import { ApolloServer, gql } from 'apollo-server-express'
 import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core'
-import express from 'express'
-import http from 'http'
+import express, { Request, Response } from 'express'
+import http, { request } from 'http'
 import { PrismaClient } from '@prisma/client'
 import bcrypt from 'bcrypt'
+import session from 'express-session'
 
 const prisma = new PrismaClient()
 const PORT = 4000
+
 const typeDefs = gql`
   type Book {
     id: Int
@@ -32,15 +34,31 @@ const typeDefs = gql`
     getBooksByTitle(title: String): [Book]
     books: [Book]
   }
+
+  type Mutation {
+    signIn(email: String, password: String): Auth
+  }
 `
 
+const mutation = {
+  signIn: async (
+    parent: any,
+    args: { email: string; password: string },
+    context: { req: Request; res: Response }
+  ) => {
+    console.log(context.req, args.email, args.password)
+    return { isSuccess: false, message: 'error' }
+  },
+}
+
 const query = {
-  // TODO: 認証処理の確認
+  // TODO: 認証処理をmutationに移動(signIn)、代わりに認証済みチェックの実装
   authUser: async (
     parent: any,
     args: { email: string; password: string },
     context: any
   ) => {
+    console.log('req:', context.req)
     const user = await prisma.users.findUnique({
       where: {
         email: args.email,
@@ -84,9 +102,23 @@ const query = {
 
 const resolvers = {
   Query: query,
+  Mutation: mutation,
 }
 
 const app = express()
+
+app.use(
+  session({
+    name: 'session',
+    secret: 'secret',
+    resave: false,
+    saveUninitialized: false,
+    // TODO: MySQLにストアさせる
+    // store: sessionStore,
+    cookie: { secure: false },
+  })
+)
+
 const httpServer = http.createServer(app)
 
 ;(async () => {
@@ -94,6 +126,7 @@ const httpServer = http.createServer(app)
     typeDefs,
     resolvers,
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+    context: ({ req, res }) => ({ req, res }),
   })
   await server.start()
   server.applyMiddleware({ app })
