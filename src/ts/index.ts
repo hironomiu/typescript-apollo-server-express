@@ -132,7 +132,7 @@ app.use(
     saveUninitialized: false,
     // TODO: MySQLにストアさせる
     // store: sessionStore,
-    cookie: { secure: true },
+    cookie: { secure: false },
   })
 )
 
