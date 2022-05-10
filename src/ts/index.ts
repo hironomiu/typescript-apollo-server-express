@@ -1,8 +1,8 @@
 import { ApolloServer, gql } from 'apollo-server-express'
 import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core'
 import express, { Request, Response } from 'express'
+import cookieParser from 'cookie-parser'
 import http from 'http'
-import cors from 'cors'
 import { PrismaClient } from '@prisma/client'
 import bcrypt from 'bcrypt'
 import session from 'express-session'
@@ -107,6 +107,7 @@ const query = {
     console.log('called')
     console.log(context.req.session)
     context.req.session.userId = 'hoge'
+    console.log(context.req.session)
     context.res.cookie('hoge', 'hogehoge')
     const books = await prisma.books.findMany()
 
@@ -121,16 +122,7 @@ const resolvers = {
 
 const app = express()
 
-// app.use(
-//   cors({
-//     origin: [
-//       'http://localhost:3001',
-//       'https://studio.apollographql.com/sandbox/explorer',
-//     ],
-//     // credentials: true,
-//     optionsSuccessStatus: 200,
-//   })
-// )
+app.use(cookieParser())
 
 app.use(
   session({
@@ -140,7 +132,7 @@ app.use(
     saveUninitialized: false,
     // TODO: MySQLにストアさせる
     // store: sessionStore,
-    cookie: { secure: false },
+    cookie: { secure: true },
   })
 )
 
@@ -148,6 +140,8 @@ const httpServer = http.createServer(app)
 
 const corsOptions = {
   origin: ['http://localhost:3001', 'https://studio.apollographql.com'],
+  credentials: true,
+  optionsSuccessStatus: 200,
 }
 
 ;(async () => {
