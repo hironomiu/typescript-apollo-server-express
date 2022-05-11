@@ -1,4 +1,5 @@
 import { Response } from 'express'
+import { Request } from 'express'
 import { PrismaClient } from '@prisma/client'
 import bcrypt from 'bcrypt'
 
@@ -8,8 +9,10 @@ export const mutation = {
   signIn: async (
     parent: any,
     args: { email: string; password: string },
-    // TODO: 型
-    context: { req: any; res: Response }
+    context: {
+      req: Request & { session: { userId: number; nickname: string } }
+      res: Response
+    }
   ) => {
     console.log(args.email, args.password)
     console.log('context:', context.req.session)
@@ -35,7 +38,6 @@ export const mutation = {
     if (isValid) {
       context.req.session.userId = user.id
       context.req.session.nickname = user.nickname
-      // context.res.cookie('hoge', 'hogehoge')
       return { isSuccess: true, message: 'success' }
     }
 
@@ -44,9 +46,11 @@ export const mutation = {
   },
   signOut: (
     parent: any,
-    args: { email: string; password: string },
-    // TODO: 型
-    context: { req: any; res: Response }
+    args: any,
+    context: {
+      req: Request & { session: { destroy: () => void } }
+      res: Response
+    }
   ) => {
     context.req.session.destroy()
     context.res.clearCookie('session')

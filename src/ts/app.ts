@@ -8,11 +8,6 @@ import { typeDefs } from './typeDef'
 import { query } from './query'
 import { mutation } from './mutation'
 
-const resolvers = {
-  Query: query,
-  Mutation: mutation,
-}
-
 const app = express()
 
 app.use(cookieParser())
@@ -31,11 +26,8 @@ app.use(
 
 export const httpServer = http.createServer(app)
 
-const CORS_URLS: string[] = process.env.CORS_URLS?.split(' ') || [
-  'http://localhost:3000',
-]
 const corsOptions = {
-  origin: [...CORS_URLS],
+  origin: process.env.CORS_URLS?.split(' ') || ['http://localhost:3000'],
   credentials: true,
   optionsSuccessStatus: 200,
 }
@@ -43,7 +35,10 @@ const corsOptions = {
 ;(async () => {
   const server = new ApolloServer({
     typeDefs,
-    resolvers,
+    resolvers: {
+      Query: query,
+      Mutation: mutation,
+    },
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
     context: ({ req, res }) => ({ req, res }),
   })
