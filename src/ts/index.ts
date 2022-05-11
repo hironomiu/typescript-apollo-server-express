@@ -1,4 +1,4 @@
-import { ApolloServer, gql } from 'apollo-server-express'
+import { ApolloServer } from 'apollo-server-express'
 import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core'
 import express, { Request, Response } from 'express'
 import cookieParser from 'cookie-parser'
@@ -6,41 +6,10 @@ import http from 'http'
 import { PrismaClient } from '@prisma/client'
 import bcrypt from 'bcrypt'
 import session from 'express-session'
+import { typeDefs } from './typeDef'
 
 const prisma = new PrismaClient()
 const PORT = 4000
-
-const typeDefs = gql`
-  type Book {
-    id: Int
-    title: String
-    author: String
-  }
-
-  type User {
-    id: Int
-    nickname: String
-    email: String
-    password: String
-  }
-
-  type AuthMessage {
-    isSuccess: Boolean
-    message: String
-  }
-
-  type Query {
-    authUser(email: String, password: String): AuthMessage
-    getBookById(id: ID): Book
-    getBooksByTitle(title: String): [Book]
-    books: [Book]
-  }
-
-  type Mutation {
-    signIn(email: String, password: String): AuthMessage
-    signOut: AuthMessage
-  }
-`
 
 const mutation = {
   signIn: async (
