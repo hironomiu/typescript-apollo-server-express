@@ -143,9 +143,11 @@ app.use(
 )
 
 const httpServer = http.createServer(app)
-
+const CORS_URLS: string[] = process.env.CORS_URLS?.split(' ') || [
+  'http://localhost:3000',
+]
 const corsOptions = {
-  origin: ['http://localhost:3001', 'https://studio.apollographql.com'],
+  origin: [...CORS_URLS],
   credentials: true,
   optionsSuccessStatus: 200,
 }
