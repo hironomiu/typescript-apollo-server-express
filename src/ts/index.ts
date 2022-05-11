@@ -1,6 +1,6 @@
 import { ApolloServer } from 'apollo-server-express'
 import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core'
-import express, { Request, Response } from 'express'
+import express, { Response } from 'express'
 import cookieParser from 'cookie-parser'
 import http from 'http'
 import { PrismaClient } from '@prisma/client'
@@ -37,16 +37,17 @@ const mutation = {
       })
     )
 
-    console.log(user)
-
     if (isValid) {
-      // context.req.session.regenerate()
-      context.req.session.id = user.id
+      // TODO: コールバック、再作成させる
+      context.req.session.regenerate(() => null)
+      context.req.session.userId = user.id
       context.req.session.nickname = user.nickname
-      context.res.cookie('hoge', 'hogehoge')
+      // context.res.cookie('hoge', 'hogehoge')
+      console.log('called')
       return { isSuccess: true, message: 'success' }
     }
 
+    console.log(user)
     return { isSuccess: false, message: 'error' }
   },
   signOut: (
@@ -114,9 +115,9 @@ const query = {
     const books = await prisma.books.findMany()
     console.log('called')
     console.log(context.req.session)
-    context.req.session.userId = 'hoge'
+    // context.req.session.userId = 'hoge'
     console.log(context.req.session)
-    context.res.cookie('hoge', 'hogehoge')
+    // context.res.cookie('hoge', 'hogehoge')
     return books
   },
 }
