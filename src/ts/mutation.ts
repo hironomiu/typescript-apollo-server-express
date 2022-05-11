@@ -14,7 +14,7 @@ export const mutation = {
       res: Response
     }
   ) => {
-    // TODO: コールバック、再作成させる、処理する場所について
+    // TODO: コールバック内必要な処理記述、処理する場所について
     context.req.session.regenerate(() => null)
 
     const user = await prisma.users.findUnique({
@@ -23,9 +23,8 @@ export const mutation = {
       },
     })
 
-    if (!user) {
-      return { isSuccess: false, message: 'error' }
-    }
+    if (!user) return { isSuccess: false, message: 'error' }
+
     const isValid = await new Promise((resolve, reject) =>
       bcrypt.compare(args.password, user.password, (err, isValid) => {
         if (err) reject(err)
@@ -39,7 +38,6 @@ export const mutation = {
       return { isSuccess: true, message: 'success' }
     }
 
-    console.log(user)
     return { isSuccess: false, message: 'error' }
   },
   signOut: (
