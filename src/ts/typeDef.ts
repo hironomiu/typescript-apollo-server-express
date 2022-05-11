@@ -20,7 +20,7 @@ export const typeDefs = gql`
   }
 
   type Query {
-    authUser(email: String, password: String): AuthMessage
+    authCheck: AuthMessage
     getBookById(id: ID): Book
     getBooksByTitle(title: String): [Book]
     books: [Book]

@@ -63,31 +63,13 @@ const mutation = {
 }
 
 const query = {
-  // TODO: 認証処理をmutationに移動(signIn)、代わりに認証済みチェックの実装
-  authUser: async (
-    parent: any,
-    args: { email: string; password: string },
-    context: any
-  ) => {
+  // TODO: 認証済みチェックの実装
+  authCheck: async (parent: any, args: any, context: any) => {
     console.log('called')
 
-    const user = await prisma.users.findUnique({
-      where: {
-        email: args.email,
-      },
-    })
-    if (!user) {
-      return { isSuccess: false, message: 'error' }
-    }
-    const isValid = await new Promise((resolve, reject) =>
-      bcrypt.compare(args.password, user.password, (err, isValid) => {
-        resolve(isValid)
-      })
-    )
-    if (isValid) {
+    if (true) {
       return { isSuccess: true, message: 'success' }
     }
-
     return { isSuccess: false, message: 'error' }
   },
   getBookById: async (parent: any, args: { id: string }, context: any) => {
@@ -106,18 +88,12 @@ const query = {
     })
     return books
   },
-  // 仮で動作確認のためsession設定、cookieレスポンス
   books: async (
     parent: any,
     args: any,
     context: { req: any; res: Response }
   ) => {
     const books = await prisma.books.findMany()
-    console.log('called')
-    console.log(context.req.session)
-    // context.req.session.userId = 'hoge'
-    console.log(context.req.session)
-    // context.res.cookie('hoge', 'hogehoge')
     return books
   },
 }
