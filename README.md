@@ -12,6 +12,7 @@
 | DATABASE_URL   | prisma で使用                       |
 | SESSION_SECRET | bcrypt で使用                       |
 | CORS_URLS      | CORS の除外(スペース区切りで複数可) |
+| SERVER_PORT    | server listen port                  |
 
 ## Database
 
