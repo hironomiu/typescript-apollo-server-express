@@ -20,6 +20,8 @@ const mutation = {
   ) => {
     console.log(args.email, args.password)
     console.log('context:', context.req.session)
+    // TODO: コールバック、再作成させる、処理する場所について
+    context.req.session.regenerate(() => null)
 
     const user = await prisma.users.findUnique({
       where: {
@@ -38,8 +40,6 @@ const mutation = {
     )
 
     if (isValid) {
-      // TODO: コールバック、再作成させる
-      context.req.session.regenerate(() => null)
       context.req.session.userId = user.id
       context.req.session.nickname = user.nickname
       // context.res.cookie('hoge', 'hogehoge')
