@@ -14,8 +14,6 @@ export const mutation = {
       res: Response
     }
   ) => {
-    console.log(args.email, args.password)
-    console.log('context:', context.req.session)
     // TODO: コールバック、再作成させる、処理する場所について
     context.req.session.regenerate(() => null)
 
