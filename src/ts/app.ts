@@ -3,13 +3,10 @@ import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core'
 import express from 'express'
 import cookieParser from 'cookie-parser'
 import http from 'http'
-import { PrismaClient } from '@prisma/client'
 import session from 'express-session'
 import { typeDefs } from './typeDef'
 import { query } from './query'
 import { mutation } from './mutation'
-
-const prisma = new PrismaClient()
 
 const resolvers = {
   Query: query,
@@ -33,6 +30,7 @@ app.use(
 )
 
 export const httpServer = http.createServer(app)
+
 const CORS_URLS: string[] = process.env.CORS_URLS?.split(' ') || [
   'http://localhost:3000',
 ]
@@ -53,7 +51,3 @@ const corsOptions = {
   server.applyMiddleware({ app, cors: corsOptions })
   console.log(server.graphqlPath)
 })()
-
-// httpServer.listen({ port: PORT }, () => {
-//   console.log(`🚀 Server ready at http://localhost:${PORT}`)
-// })
