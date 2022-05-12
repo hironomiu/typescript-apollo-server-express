@@ -21,15 +21,20 @@ create database graphql;
 ```
 
 ```
+drop table books;
 create table books(
     id int not null auto_increment,
-    title varchar(10) not null,
-    author varchar(10) not null,
+    title varchar(100) not null,
+    author varchar(30) not null,
     primary key(id)
 );
 
-insert into books(title,author) values("本A","太郎"),("本B","Mike"),("本C","花子");
+insert into books(title,author) values
+("とても凄い本とても凄い本とても凄い本","太郎"),
+("衝撃的な本衝撃的な本衝撃的な本","Mike"),
+("圧倒的な本圧倒的な本圧倒的な本","花子");
 
+drop table users;
 create table users(
   id int unsigned not null auto_increment,
   nickname varchar(100) not null,
