@@ -4,7 +4,10 @@ const prisma = new PrismaClient()
 export const query = {
   // TODO: 認証済みチェックの実装
   authCheck: async (parent: any, args: any, context: any) => {
-    console.log('called')
+    console.log('called', context.req.session.userId)
+
+    if (!context.req.session.userId)
+      return { isSuccess: false, message: 'error' }
 
     if (true) {
       return { isSuccess: true, message: 'success' }
