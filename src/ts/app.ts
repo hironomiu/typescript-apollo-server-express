@@ -29,7 +29,6 @@ const options = {
   user: DB_USER,
   password: DB_PASSWORD,
   database: DB_DATABASE,
-  // MEMO: 対策 -> mysql2 sessionStoreを使うとsessionが安定しない
   connectTimeout: 0,
   waitForConnections: true,
 }
@@ -43,7 +42,6 @@ app.use(
     secret: 'secret',
     resave: false,
     saveUninitialized: false,
-    // TODO: MySQLにストアさせる
     store: sessionStore,
     cookie: { secure: false },
   })
