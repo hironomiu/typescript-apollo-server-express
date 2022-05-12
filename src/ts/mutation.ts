@@ -10,7 +10,9 @@ export const mutation = {
     parent: any,
     args: { email: string; password: string },
     context: {
-      req: Request & { session: { userId: number; nickname: string } }
+      req: Request & {
+        session: { userId: number; email: string; nickname: string }
+      }
       res: Response
     }
   ) => {
@@ -35,7 +37,9 @@ export const mutation = {
     )
 
     if (isValid) {
+      console.log('signin success')
       context.req.session.userId = user.id
+      context.req.session.email = user.email
       context.req.session.nickname = user.nickname
       return { isSuccess: true, message: 'success' }
     }

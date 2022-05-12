@@ -7,7 +7,9 @@ import session from 'express-session'
 import { typeDefs } from './typeDef'
 import { query } from './query'
 import { mutation } from './mutation'
+import { PrismaClient } from '@prisma/client'
 
+const prisma = new PrismaClient()
 const app = express()
 
 app.use(cookieParser())
@@ -40,7 +42,20 @@ const corsOptions = {
       Mutation: mutation,
     },
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
-    context: ({ req, res }) => ({ req, res }),
+    context: async ({ req, res }: any) => {
+      console.log('session:', req.session)
+      // TODO: 型
+      let user: any | null = null
+      if (req.session.userId) {
+        user = await prisma.users.findUnique({
+          where: {
+            id: req.session.userId,
+          },
+        })
+      }
+
+      return { req, res, user }
+    },
   })
   await server.start()
   server.applyMiddleware({ app, cors: corsOptions })
