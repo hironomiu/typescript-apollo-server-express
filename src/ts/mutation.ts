@@ -26,7 +26,10 @@ export const mutation = {
       },
     })
 
-    if (!user) return { isSuccess: false, message: 'error' }
+    if (!user) {
+      context.req.session.destroy(() => null)
+      return { isSuccess: false, message: 'error' }
+    }
 
     console.log('called')
     const isValid = await new Promise((resolve, reject) =>
