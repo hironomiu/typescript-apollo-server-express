@@ -53,6 +53,7 @@ const corsOptions = {
           },
         })
       }
+      console.log('context return:', user)
 
       return { req, res, user }
     },
