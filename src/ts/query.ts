@@ -9,7 +9,12 @@ export const query = {
     if (!context.req.session.userId)
       return { isSuccess: false, message: 'error' }
 
-    if (true) {
+    const user = await prisma.users.findUnique({
+      where: {
+        id: context.req.session.userId,
+      },
+    })
+    if (user) {
       return { isSuccess: true, message: 'success' }
     }
     return { isSuccess: false, message: 'error' }
