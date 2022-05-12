@@ -57,8 +57,8 @@ npx tsc --init
 ```
 
 ```
-npm install apollo-server-express apollo-server-core express graphql bcrypt express-session cookie-parser
-npm install --save-dev @types/bcrypt @types/express-session @types/cookie-parser
+npm install apollo-server-express apollo-server-core express graphql bcrypt express-session cookie-parser mysql2 express-mysql-session
+npm install --save-dev @types/bcrypt @types/express-session @types/cookie-parser types/mysql2# @types/express-mysql-session
 ```
 
 ```
