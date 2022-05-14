@@ -31,6 +31,9 @@ const connection = mysql2.createPool(options)
 const MySQLStore = expressMySqlSession(expressSession)
 export const sessionStore = new MySQLStore({}, connection)
 
+// MEMO: dev or prod
+const productionMode = process.env.PRODUCTION_MODE || 'dev'
+
 app.use(
   session({
     name: 'session',
@@ -38,8 +41,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store: sessionStore,
-    // TODO: 環境変数で使い分ける（true or false）
-    cookie: { secure: false },
+    cookie: { secure: productionMode === 'dev' ? false : true },
   })
 )
 

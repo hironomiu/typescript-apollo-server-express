@@ -2,17 +2,18 @@
 
 ## .env
 
-| 変数名         | 設定値                              |
-| :------------- | :---------------------------------- |
-| DB_DATABASE    | session store で使用                |
-| DB_HOST        | session store で使用                |
-| DB_PASSWORD    | session store で使用                |
-| DB_PORT        | session store で使用                |
-| DB_USER        | session store で使用                |
-| DATABASE_URL   | prisma で使用                       |
-| SESSION_SECRET | bcrypt で使用                       |
-| CORS_URLS      | CORS の除外(スペース区切りで複数可) |
-| SERVER_PORT    | server listen port                  |
+| 変数名          | 設定値                              |
+| :-------------- | :---------------------------------- |
+| DB_DATABASE     | session store で使用                |
+| DB_HOST         | session store で使用                |
+| DB_PASSWORD     | session store で使用                |
+| DB_PORT         | session store で使用                |
+| DB_USER         | session store で使用                |
+| DATABASE_URL    | prisma で使用                       |
+| SESSION_SECRET  | bcrypt で使用                       |
+| CORS_URLS       | CORS の除外(スペース区切りで複数可) |
+| SERVER_PORT     | server listen port                  |
+| PRODUCTION_MODE | 動作環境 dev or prod                |
 
 ## Database
 
