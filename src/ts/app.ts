@@ -8,7 +8,7 @@ import * as expressSession from 'express-session'
 import { typeDefs } from './typeDef'
 import { query } from './query'
 import { mutation } from './mutation'
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient, users } from '@prisma/client'
 import expressMySqlSession from 'express-mysql-session'
 import mysql2 from 'mysql2/promise'
 
@@ -63,8 +63,7 @@ const corsOptions = {
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
     context: async ({ req, res }: any) => {
       console.log('session:', req.session)
-      // TODO: 型
-      let user: any | null = null
+      let user: users | null = null
       if (req.session.userId) {
         user = await prisma.users.findUnique({
           where: {

@@ -2,7 +2,6 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 export const query = {
-  // TODO: 認証済みチェックの実装
   authCheck: async (parent: any, args: any, context: any) => {
     console.log('called', context.req.session.userId)
 
