@@ -1,4 +1,14 @@
-#
+# typescript-react-apollo
+
+typescript-apollo-server-express のクライアント APP
+
+## Run
+
+```
+npm start
+```
+
+## Install Memo
 
 ```
 npx create-react-app . --template typescript
