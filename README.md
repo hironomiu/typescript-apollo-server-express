@@ -89,3 +89,11 @@ migrate
 npx prisma migrate dev --create-only --name initdb
 npx prisma migrate dev
 ```
+
+#### Memo
+
+作成した Model の型定義は`node_modules`内で管理している。型定義を利用したい場合は以下で可能
+
+```
+import { users } from '@prisma/client'
+```
