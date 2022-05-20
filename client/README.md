@@ -18,3 +18,10 @@ npm install @apollo/client graphql
 ## Tailwind
 
 [公式：](https://tailwindcss.com/docs/installation)
+
+## react-router-dom
+
+```
+npm install react-router-dom
+npm install --save-dev @types/react-router-dom
+```

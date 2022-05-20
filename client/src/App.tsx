@@ -1,4 +1,5 @@
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'
 
 const client = new ApolloClient({
@@ -10,9 +11,11 @@ const client = new ApolloClient({
 const App = () => {
   return (
     <ApolloProvider client={client}>
-      <div className="h-[100vh] bg-gradient-to-r from-cyan-500 via-purple-500 to-green-500">
-        <Layout />
-      </div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Layout />}></Route>
+        </Routes>
+      </BrowserRouter>
     </ApolloProvider>
   )
 }
