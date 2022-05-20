@@ -72,6 +72,8 @@ npm install --save-dev nodemon
 
 [公式:Install Prisma Client](https://www.prisma.io/docs/getting-started/setup-prisma/add-to-existing-project/relational-databases/install-prisma-client-typescript-mysql)
 
+リポジトリ clone 時も DB＆Table の作成後以下は行う
+
 ```
 npx prisma db pull
 npx prisma generate

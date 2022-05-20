@@ -9,8 +9,8 @@ datasource db {
 
 model books {
   id     Int    @id @default(autoincrement())
-  title  String @db.VarChar(10)
-  author String @db.VarChar(10)
+  title  String @db.VarChar(100)
+  author String @db.VarChar(30)
 }
 
 model users {
