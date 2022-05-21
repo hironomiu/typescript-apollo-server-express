@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useMutation, gql, useLazyQuery } from '@apollo/client'
 import SignIn from './SignIn'
+import SignOut from './SignOut'
 
 export type Maybe<T> = T | null
 
@@ -134,19 +135,4 @@ const Main = () => {
   )
 }
 
-const SignOut = ({ signOut }: any) => {
-  return (
-    <div className="my-4 flex justify-center">
-      <button
-        onClick={(e) => {
-          e.preventDefault()
-          signOut()
-        }}
-        className="text-2xl"
-      >
-        SignOut
-      </button>
-    </div>
-  )
-}
 export default Main
