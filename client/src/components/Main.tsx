@@ -104,11 +104,6 @@ const Main = () => {
 
   return (
     <div className="flex flex-col my-4">
-      {isSignIn ? (
-        <span className="text-4xl">ログインしとるで！</span>
-      ) : (
-        <span className="text-4xl">ログインしてもええんやで！</span>
-      )}
       <div className="my-4">
         {books ? books.map((d: any) => <div key={d.id}>{d.title}</div>) : null}
       </div>
