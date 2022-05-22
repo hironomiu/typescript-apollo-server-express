@@ -105,6 +105,7 @@ const Main = () => {
   return (
     <div className="flex flex-col my-4">
       <div className="my-4">
+        {/* TODO: 型 */}
         {books ? books.map((d: any) => <div key={d.id}>{d.title}</div>) : null}
       </div>
 
