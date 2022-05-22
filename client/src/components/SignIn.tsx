@@ -1,6 +1,34 @@
-import React from 'react'
+import { useState, useEffect } from 'react'
+import { useMutation, useReactiveVar } from '@apollo/client'
+import { useNavigate } from 'react-router-dom'
+import { SignInMutation } from './Main'
+import { isSignInVar } from '../global'
 
-const SignIn = ({ email, setEmail, password, setPassword, signIn }: any) => {
+const SignIn = () => {
+  const [email, setEmail] = useState('taro@example.com')
+  const [password, setPassword] = useState('password')
+  const isSignIn = useReactiveVar(isSignInVar)
+  const navigate = useNavigate()
+
+  const [signIn] = useMutation(SignInMutation, {
+    variables: {
+      email: email,
+      password: password,
+    },
+    onCompleted: (data) => {
+      console.log(data)
+      if (data.signIn.isSuccess) {
+        console.log('success')
+        isSignInVar(true)
+      }
+    },
+  })
+
+  useEffect(() => {
+    if (isSignIn) {
+      navigate('/')
+    }
+  }, [isSignIn])
   return (
     <div className="flex flex-col my-4 items-center">
       <div>

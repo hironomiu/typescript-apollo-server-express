@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useMutation, gql, useLazyQuery } from '@apollo/client'
-import SignIn from './SignIn'
+// import SignIn from './SignIn'
 import SignOut from './SignOut'
+import { useReactiveVar } from '@apollo/client'
+import { isSignInVar } from '../global'
 
 export type Maybe<T> = T | null
 
@@ -20,6 +23,7 @@ export type Book = {
   author?: Maybe<Scalars['String']>
 }
 
+// TODO: 全部別に切り出す
 const BOOKS_QUERY = gql`
   query {
     books {
@@ -28,7 +32,7 @@ const BOOKS_QUERY = gql`
     }
   }
 `
-const SignInMutation = gql`
+export const SignInMutation = gql`
   mutation SignInMutation($email: String, $password: String) {
     signIn(email: $email, password: $password) {
       isSuccess
@@ -54,9 +58,10 @@ const AuthCheck = gql`
 `
 
 const Main = () => {
-  const [email, setEmail] = useState('taro@example.com')
-  const [password, setPassword] = useState('password')
-  const [isSignIn, setIsSignIn] = useState(false)
+  const navigate = useNavigate()
+
+  const isSignIn = useReactiveVar(isSignInVar)
+
   const [books, setBooks] = useState<[]>()
   const [, bookLazyQueryState] = useLazyQuery(BOOKS_QUERY, {
     onCompleted: (data) => {
@@ -73,27 +78,14 @@ const Main = () => {
       console.log('data:', data)
       if (data.authCheck.isSuccess) {
         console.log('success')
-        setIsSignIn(true)
+        isSignInVar(true)
       }
     },
   })
   const [signOut] = useMutation(SignOutMutation, {
     onCompleted: () => {
       setBooks((_prev) => (_prev = []))
-      setIsSignIn(false)
-    },
-  })
-  const [signIn] = useMutation(SignInMutation, {
-    variables: {
-      email: email,
-      password: password,
-    },
-    onCompleted: (data) => {
-      console.log(data)
-      if (data.signIn.isSuccess) {
-        console.log('success')
-        setIsSignIn(true)
-      }
+      isSignInVar(false)
     },
   })
 
@@ -102,12 +94,13 @@ const Main = () => {
   }, [authCheck])
 
   useEffect(() => {
-    console.log('isSignin:', isSignIn)
     if (isSignIn) {
       console.log('books read')
       bookLazyQueryState.refetch().then((data) => setBooks(data.data.books))
+    } else {
+      navigate('/signin')
     }
-  }, [isSignIn, bookLazyQueryState])
+  }, [isSignIn, bookLazyQueryState, navigate])
 
   return (
     <div className="flex flex-col my-4">
@@ -119,16 +112,6 @@ const Main = () => {
       <div className="my-4">
         {books ? books.map((d: any) => <div key={d.id}>{d.title}</div>) : null}
       </div>
-
-      {isSignIn ? null : (
-        <SignIn
-          email={email}
-          setEmail={setEmail}
-          password={password}
-          setPassword={setPassword}
-          signIn={signIn}
-        />
-      )}
 
       {isSignIn ? <SignOut signOut={signOut} /> : null}
     </div>
