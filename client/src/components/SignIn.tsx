@@ -28,7 +28,8 @@ const SignIn = () => {
     if (isSignIn) {
       navigate('/')
     }
-  }, [isSignIn])
+  }, [isSignIn, navigate])
+
   return (
     <div className="flex flex-col my-4 items-center">
       <div>

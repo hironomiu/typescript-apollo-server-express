@@ -4,6 +4,6 @@ import App from './App'
 
 test('renders learn react link', () => {
   render(<App />)
-  const linkElement = screen.getByText(/ログイン/i)
+  const linkElement = screen.getByText(/Sign/i)
   expect(linkElement).toBeInTheDocument()
 })

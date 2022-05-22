@@ -1,6 +1,7 @@
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'
+import Main from './components/Main'
 import SignIn from './components/SignIn'
 
 const client = new ApolloClient({
@@ -14,8 +15,10 @@ const App = () => {
     <ApolloProvider client={client}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Layout />}></Route>
-          <Route path="/signin" element={<SignIn />}></Route>
+          <Route path="/" element={<Layout />}>
+            <Route path="/" element={<Main />}></Route>
+            <Route path="/signin" element={<SignIn />}></Route>
+          </Route>
         </Routes>
       </BrowserRouter>
     </ApolloProvider>
