@@ -1,5 +1,6 @@
 import React from 'react'
 
+// TODO: モーダルにする
 const SignOut = ({ signOut }: any) => {
   return (
     <div className="my-4 flex justify-center">
