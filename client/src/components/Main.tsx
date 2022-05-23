@@ -4,7 +4,7 @@ import { useMutation, gql, useLazyQuery } from '@apollo/client'
 // import SignIn from './SignIn'
 import SignOut from './SignOut'
 import { useReactiveVar } from '@apollo/client'
-import { isSignInVar } from '../global'
+import { isSignInVar, booksVar } from '../global'
 
 export type Maybe<T> = T | null
 
@@ -40,7 +40,7 @@ export const SignInMutation = gql`
     }
   }
 `
-const SignOutMutation = gql`
+export const SignOutMutation = gql`
   mutation {
     signOut {
       isSuccess
@@ -62,11 +62,12 @@ const Main = () => {
 
   const isSignIn = useReactiveVar(isSignInVar)
 
-  const [books, setBooks] = useState<[]>()
+  // const [books, setBooks] = useState<[]>()
+  const books = useReactiveVar(booksVar)
   const [, bookLazyQueryState] = useLazyQuery(BOOKS_QUERY, {
     onCompleted: (data) => {
       console.log('data:', data)
-      setBooks(data.books)
+      booksVar(data.books)
     },
     onError: (error) => {
       console.log(error)
@@ -82,9 +83,10 @@ const Main = () => {
       }
     },
   })
+
   const [signOut] = useMutation(SignOutMutation, {
     onCompleted: () => {
-      setBooks((_prev) => (_prev = []))
+      booksVar([])
       isSignInVar(false)
     },
   })
@@ -96,7 +98,7 @@ const Main = () => {
   useEffect(() => {
     if (isSignIn) {
       console.log('books read')
-      bookLazyQueryState.refetch().then((data) => setBooks(data.data.books))
+      bookLazyQueryState.refetch().then((data) => booksVar(data.data.books))
     } else {
       navigate('/signin')
     }
