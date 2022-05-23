@@ -1,4 +1,3 @@
-import React from 'react'
 import { useReactiveVar, useMutation } from '@apollo/client'
 import { isSignInVar, booksVar } from '../global'
 import { SignOutMutation } from './Main'

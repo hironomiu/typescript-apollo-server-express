@@ -1,5 +1,3 @@
-import React from 'react'
-
 // TODO: モーダルにする
 const SignOut = ({ signOut }: any) => {
   return (
