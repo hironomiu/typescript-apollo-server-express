@@ -12,7 +12,7 @@ const Header = () => {
   })
   const isSignIn = useReactiveVar(isSignInVar)
   return (
-    <header className="flex h-32">
+    <header className="flex h-10">
       <nav className="flex">
         <div className="text-2xl">Header</div>
         {isSignIn ? (
