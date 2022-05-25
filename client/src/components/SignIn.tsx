@@ -31,7 +31,7 @@ const SignIn = () => {
   }, [isSignIn, navigate])
 
   return (
-    <div className="flex flex-col my-4 items-center">
+    <div className="flex flex-col my-4 justify-center items-center w-screen h-[80-vh]">
       <div>
         <div className="justify-start">
           <label className="mr-2">

@@ -12,9 +12,10 @@ const Header = () => {
   })
   const isSignIn = useReactiveVar(isSignInVar)
   return (
-    <header className="flex h-10">
-      <nav className="flex">
-        <div className="text-2xl">Header</div>
+    <header className="flex h-10 justify-between">
+      <div className="ml-4 text-2xl">Header</div>
+      <nav className="flex mr-4">
+        <div className="text-2xl mr-2">Dummy</div>
         {isSignIn ? (
           <div>
             <button
@@ -22,7 +23,7 @@ const Header = () => {
                 e.preventDefault()
                 signOut()
               }}
-              className=""
+              className="text-2xl"
             >
               SignOut!
             </button>
