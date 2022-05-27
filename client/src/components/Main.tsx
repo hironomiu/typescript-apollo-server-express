@@ -29,6 +29,7 @@ const BOOKS_QUERY = gql`
     books {
       id
       title
+      author
     }
   }
 `
@@ -108,7 +109,13 @@ const Main = () => {
     <div className="flex flex-col my-4 items-center">
       <div className="my-4">
         {/* TODO: 型 */}
-        {books ? books.map((d: any) => <div key={d.id}>{d.title}</div>) : null}
+        {books
+          ? books.map((d: any) => (
+              <div key={d.id}>
+                タイトル：{d.title}：著者：{d.author}
+              </div>
+            ))
+          : null}
       </div>
 
       {isSignIn ? <SignOut signOut={signOut} /> : null}
