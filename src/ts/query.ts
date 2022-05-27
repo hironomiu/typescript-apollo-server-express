@@ -2,6 +2,7 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 export const query = {
+  // TODO: 型
   authCheck: async (parent: any, args: any, context: any) => {
     console.log('called', context.req.session.userId)
 
@@ -18,12 +19,14 @@ export const query = {
     }
     return { isSuccess: false, message: 'error' }
   },
+  // TODO: 型
   getBookById: async (parent: any, args: { id: string }, context: any) => {
     const books = await prisma.books.findUnique({
       where: { id: Number(args.id) },
     })
     return books
   },
+  // TODO: 型
   getBooksByTitle: async (
     parent: any,
     args: { title: string },
@@ -34,6 +37,7 @@ export const query = {
     })
     return books
   },
+  // TODO: 型
   books: async (
     parent: any,
     args: any,
