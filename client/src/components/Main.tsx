@@ -49,7 +49,7 @@ export const SignOutMutation = gql`
     }
   }
 `
-const AuthCheck = gql`
+export const AuthCheck = gql`
   query {
     authCheck {
       isSuccess
@@ -63,7 +63,6 @@ const Main = () => {
   const navigate = useNavigate()
   const isSignIn = useReactiveVar(isSignInVar)
   const books = useReactiveVar(booksVar)
-  const user = useReactiveVar(userVar)
 
   const [, bookLazyQueryState] = useLazyQuery(BOOKS_QUERY, {
     onCompleted: (data) => {
@@ -75,37 +74,12 @@ const Main = () => {
     },
   })
 
-  const { refetch } = useQuery(AuthCheck, {
-    fetchPolicy: 'no-cache',
-    onCompleted: (data) => {
-      if (data.authCheck.isSuccess) {
-        isSignInVar(true)
-      }
-    },
-  })
-
-  // TODO: ここでするのが妥当か
-  // SignInチェック
-  useEffect(() => {
-    refetch().then((data: any) => {
-      if (data.data.authCheck.isSuccess) {
-        isSignInVar(true)
-        userVar({ nickname: data.data.authCheck.nickname })
-      }
-    })
-  }, [refetch])
-
   const [signOut] = useMutation(SignOutMutation, {
     onCompleted: () => {
       booksVar([])
       isSignInVar(false)
     },
   })
-
-  // useEffect(() => {
-  //   console.log('authCheck')
-  //   authCheck()
-  // }, [authCheck])
 
   useEffect(() => {
     if (isSignIn) {

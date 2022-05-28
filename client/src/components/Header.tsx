@@ -7,6 +7,7 @@ const Header = () => {
     onCompleted: () => {
       // TODO: SignOutした際にMutationで取得したデータの初期化をやめるか、やり方を変える
       booksVar([])
+      userVar({ nickname: '' })
       isSignInVar(false)
     },
   })
