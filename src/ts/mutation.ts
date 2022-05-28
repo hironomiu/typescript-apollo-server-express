@@ -16,7 +16,6 @@ export const mutation = {
       res: Response
     }
   ) => {
-    console.log(args.email, args.password)
     // TODO: コールバック内必要な処理記述、処理する場所について
     context.req.session.regenerate(() => null)
 
@@ -31,7 +30,6 @@ export const mutation = {
       return { isSuccess: false, message: 'error' }
     }
 
-    console.log('called')
     const isValid = await new Promise((resolve, reject) =>
       bcrypt.compare(args.password, user.password, (err, isValid) => {
         if (err) reject(err)
@@ -40,7 +38,6 @@ export const mutation = {
     )
 
     if (isValid) {
-      console.log('signin success')
       context.req.session.userId = user.id
       context.req.session.email = user.email
       context.req.session.nickname = user.nickname

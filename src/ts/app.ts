@@ -62,7 +62,6 @@ const corsOptions = {
     },
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
     context: async ({ req, res }: any) => {
-      console.log('session:', req.session)
       let user: users | null = null
       if (req.session.userId) {
         user = await prisma.users.findUnique({
@@ -71,8 +70,6 @@ const corsOptions = {
           },
         })
       }
-      console.log('context return:', user)
-
       return { req, res, user }
     },
   })

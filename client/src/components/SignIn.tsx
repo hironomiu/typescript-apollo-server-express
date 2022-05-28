@@ -25,6 +25,7 @@ const SignIn = () => {
   })
 
   useEffect(() => {
+    console.log('isSignIn:', isSignIn)
     if (isSignIn) {
       navigate('/')
     }

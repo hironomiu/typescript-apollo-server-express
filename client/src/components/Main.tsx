@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useMutation, gql, useLazyQuery } from '@apollo/client'
+import { useMutation, gql, useLazyQuery, useQuery } from '@apollo/client'
 // import SignIn from './SignIn'
 import SignOut from './SignOut'
 import { useReactiveVar } from '@apollo/client'
@@ -60,14 +60,12 @@ const AuthCheck = gql`
 
 const Main = () => {
   const navigate = useNavigate()
-
   const isSignIn = useReactiveVar(isSignInVar)
-
-  // const [books, setBooks] = useState<[]>()
   const books = useReactiveVar(booksVar)
+
   const [, bookLazyQueryState] = useLazyQuery(BOOKS_QUERY, {
     onCompleted: (data) => {
-      console.log('data:', data)
+      // console.log('data:', data)
       booksVar(data.books)
     },
     onError: (error) => {
@@ -75,15 +73,23 @@ const Main = () => {
     },
   })
 
-  const [authCheck] = useLazyQuery(AuthCheck, {
+  const { refetch } = useQuery(AuthCheck, {
+    fetchPolicy: 'no-cache',
     onCompleted: (data) => {
-      console.log('data:', data)
       if (data.authCheck.isSuccess) {
-        console.log('success')
         isSignInVar(true)
       }
     },
   })
+
+  // SignInチェック
+  useEffect(() => {
+    refetch().then((data: any) => {
+      if (data.data.authCheck.isSuccess) {
+        isSignInVar(true)
+      }
+    })
+  }, [refetch])
 
   const [signOut] = useMutation(SignOutMutation, {
     onCompleted: () => {
@@ -92,13 +98,13 @@ const Main = () => {
     },
   })
 
-  useEffect(() => {
-    authCheck()
-  }, [authCheck])
+  // useEffect(() => {
+  //   console.log('authCheck')
+  //   authCheck()
+  // }, [authCheck])
 
   useEffect(() => {
     if (isSignIn) {
-      console.log('books read')
       bookLazyQueryState.refetch().then((data) => booksVar(data.data.books))
     } else {
       navigate('/signin')

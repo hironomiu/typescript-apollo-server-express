@@ -15,6 +15,7 @@ export const query = {
       },
     })
     if (user) {
+      console.log('success return')
       return { isSuccess: true, message: 'success' }
     }
     return { isSuccess: false, message: 'error' }
@@ -43,10 +44,8 @@ export const query = {
     args: any,
     context: { req: any; res: Response; user: any }
   ) => {
-    // console.log('context.user:', context.user)
     if (!context.user) return null
     const books = await prisma.books.findMany()
-    console.log('books:', books)
     return books
   },
 }
