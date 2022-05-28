@@ -1,10 +1,10 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useMutation, gql, useLazyQuery, useQuery } from '@apollo/client'
+import { useMutation, gql, useLazyQuery } from '@apollo/client'
 // import SignIn from './SignIn'
 import SignOut from './SignOut'
 import { useReactiveVar } from '@apollo/client'
-import { isSignInVar, booksVar, userVar } from '../global'
+import { isSignInVar, booksVar } from '../global'
 
 export type Maybe<T> = T | null
 
