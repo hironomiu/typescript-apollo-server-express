@@ -1,5 +1,5 @@
 import { useReactiveVar, useMutation } from '@apollo/client'
-import { isSignInVar, booksVar } from '../global'
+import { isSignInVar, booksVar, userVar } from '../global'
 import { SignOutMutation } from './Main'
 
 const Header = () => {
@@ -10,10 +10,11 @@ const Header = () => {
       isSignInVar(false)
     },
   })
+  const user = useReactiveVar(userVar)
   const isSignIn = useReactiveVar(isSignInVar)
   return (
     <header className="flex h-10 justify-between border-b-[1px] border-gray-300">
-      <div className="ml-4 text-2xl">Header</div>
+      <div className="ml-4 text-2xl">Header:{user.nickname}</div>
       <nav className="flex mr-4">
         <div className="text-2xl mr-2">Dummy</div>
         {isSignIn ? (

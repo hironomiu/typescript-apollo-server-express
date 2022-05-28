@@ -17,6 +17,7 @@ export const typeDefs = gql`
   type AuthMessage {
     isSuccess: Boolean
     message: String
+    nickname: String
   }
 
   type Query {

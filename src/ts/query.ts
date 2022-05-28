@@ -15,8 +15,8 @@ export const query = {
       },
     })
     if (user) {
-      console.log('success return')
-      return { isSuccess: true, message: 'success' }
+      console.log('success return:', user)
+      return { isSuccess: true, message: 'success', nickname: user.nickname }
     }
     return { isSuccess: false, message: 'error' }
   },
