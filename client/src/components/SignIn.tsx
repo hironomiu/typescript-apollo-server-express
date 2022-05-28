@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useMutation, useReactiveVar } from '@apollo/client'
 import { useNavigate } from 'react-router-dom'
 import { SignInMutation } from './Main'
-import { isSignInVar } from '../global'
+import { isSignInVar, userVar } from '../global'
 
 const SignIn = () => {
   const [email, setEmail] = useState('taro@example.com')
@@ -18,8 +18,10 @@ const SignIn = () => {
     onCompleted: (data) => {
       console.log(data)
       if (data.signIn.isSuccess) {
-        console.log('success')
+        console.log('success:', data.signIn.nickname)
         isSignInVar(true)
+
+        userVar({ nickname: data.signIn.nickname })
       }
     },
   })

@@ -41,7 +41,7 @@ export const mutation = {
       context.req.session.userId = user.id
       context.req.session.email = user.email
       context.req.session.nickname = user.nickname
-      return { isSuccess: true, message: 'success' }
+      return { isSuccess: true, message: 'success', nickname: user.nickname }
     }
 
     return { isSuccess: false, message: 'error' }

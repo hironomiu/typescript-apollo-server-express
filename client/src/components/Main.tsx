@@ -4,7 +4,7 @@ import { useMutation, gql, useLazyQuery } from '@apollo/client'
 // import SignIn from './SignIn'
 import SignOut from './SignOut'
 import { useReactiveVar } from '@apollo/client'
-import { isSignInVar, booksVar } from '../global'
+import { isSignInVar, booksVar, userVar } from '../global'
 
 export type Maybe<T> = T | null
 
@@ -38,6 +38,7 @@ export const SignInMutation = gql`
     signIn(email: $email, password: $password) {
       isSuccess
       message
+      nickname
     }
   }
 `
@@ -77,6 +78,7 @@ const Main = () => {
   const [signOut] = useMutation(SignOutMutation, {
     onCompleted: () => {
       booksVar([])
+      userVar({ nickname: '' })
       isSignInVar(false)
     },
   })
