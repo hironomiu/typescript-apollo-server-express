@@ -1,6 +1,6 @@
 import { useReactiveVar, useMutation } from '@apollo/client'
 import { isSignInVar, booksVar, userVar } from '../global'
-import { SignOutMutation } from './Main'
+import { SignOutMutation } from '../queries/queries'
 
 const Header = () => {
   const [signOut] = useMutation(SignOutMutation, {

@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
 import Header from './Header'
-import { AuthCheck } from './Main'
+import { AuthCheck } from '../queries/queries'
 import { isSignInVar, userVar } from '../global'
 
 const Layout = () => {

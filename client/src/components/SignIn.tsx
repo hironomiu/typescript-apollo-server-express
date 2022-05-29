@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useMutation, useReactiveVar } from '@apollo/client'
 import { useNavigate } from 'react-router-dom'
-import { SignInMutation } from './Main'
+import { SignInMutation } from '../queries/queries'
 import { isSignInVar, userVar } from '../global'
 
 const SignIn = () => {
