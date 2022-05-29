@@ -60,6 +60,15 @@ export const AuthCheck = gql`
   }
 `
 
+const BookCreate = gql`
+  mutation BookCreate($title: String, $author: String) {
+    createBook(title: $title, author: $author) {
+      isSuccess
+      message
+    }
+  }
+`
+
 const Main = () => {
   const navigate = useNavigate()
   const isSignIn = useReactiveVar(isSignInVar)
@@ -67,7 +76,6 @@ const Main = () => {
 
   const [, bookLazyQueryState] = useLazyQuery(BOOKS_QUERY, {
     onCompleted: (data) => {
-      // console.log('data:', data)
       booksVar(data.books)
     },
     onError: (error) => {
@@ -80,6 +88,17 @@ const Main = () => {
       booksVar([])
       userVar({ nickname: '' })
       isSignInVar(false)
+    },
+  })
+
+  // TODO: 仮で実装（引数を受け渡す、命名についても要検討）
+  const [bookCreate] = useMutation(BookCreate, {
+    variables: {
+      title: 'title',
+      author: 'author',
+    },
+    onCompleted: (data) => {
+      console.log(data)
     },
   })
 
@@ -103,7 +122,14 @@ const Main = () => {
             ))
           : null}
       </div>
-
+      <button
+        onClick={(e) => {
+          e.preventDefault()
+          bookCreate()
+        }}
+      >
+        登録
+      </button>
       {isSignIn ? <SignOut signOut={signOut} /> : null}
     </div>
   )

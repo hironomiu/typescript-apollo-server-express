@@ -69,6 +69,7 @@ export const mutation = {
       res: Response
     }
   ) => {
+    console.log('create book called:', args)
     const book = await prisma.books.create({
       data: {
         title: args.title,
