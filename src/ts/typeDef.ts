@@ -20,6 +20,11 @@ export const typeDefs = gql`
     nickname: String
   }
 
+  type BookMessage {
+    isSuccess: Boolean
+    message: String
+  }
+
   type Query {
     authCheck: AuthMessage
     getBookById(id: ID): Book
@@ -30,5 +35,6 @@ export const typeDefs = gql`
   type Mutation {
     signIn(email: String, password: String): AuthMessage
     signOut: AuthMessage
+    createBook: BookMessage
   }
 `

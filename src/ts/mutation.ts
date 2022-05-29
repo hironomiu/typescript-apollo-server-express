@@ -58,4 +58,24 @@ export const mutation = {
     context.res.clearCookie('session')
     return { isSuccess: true, message: 'signOuted' }
   },
+  // TODO: Booksの登録
+  createBook: async (
+    parent: any,
+    args: { title: string; author: string },
+    context: {
+      req: Request & {
+        session: { userId: number; email: string; nickname: string }
+      }
+      res: Response
+    }
+  ) => {
+    const book = await prisma.books.create({
+      data: {
+        title: args.title,
+        author: args.author,
+      },
+    })
+    console.log(book)
+    return { isSuccess: true, message: 'created' }
+  },
 }
