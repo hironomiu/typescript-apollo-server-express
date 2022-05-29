@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useMutation, useLazyQuery } from '@apollo/client'
 import SignOut from './SignOut'
@@ -11,6 +11,9 @@ const Main = () => {
   const navigate = useNavigate()
   const isSignIn = useReactiveVar(isSignInVar)
   const books = useReactiveVar(booksVar)
+
+  // TODO: Mutationで渡すBook（一旦実装）
+  const [book, setBook] = useState<Book>({})
 
   const [, bookLazyQueryState] = useLazyQuery(BOOKS_QUERY, {
     onCompleted: (data) => {
@@ -29,11 +32,11 @@ const Main = () => {
     },
   })
 
-  // TODO: 仮で実装（引数を受け渡す、命名についても要検討）
+  // TODO: 仮で実装（命名についても要検討）
   const [bookCreate] = useMutation(BookCreate, {
     variables: {
-      title: 'title',
-      author: 'author',
+      title: book.title,
+      author: book.author,
     },
     onCompleted: (data) => {
       console.log(data)
@@ -59,6 +62,20 @@ const Main = () => {
             ))
           : null}
       </div>
+      <input
+        type="text"
+        value={book.title || ''}
+        onChange={(e) =>
+          setBook((prev) => ({ ...prev, title: e.target.value }))
+        }
+      />
+      <input
+        type="text"
+        value={book.author || ''}
+        onChange={(e) =>
+          setBook((prev) => ({ ...prev, author: e.target.value }))
+        }
+      />
       <button
         onClick={(e) => {
           e.preventDefault()

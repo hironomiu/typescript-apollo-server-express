@@ -14,3 +14,7 @@ export type Book = {
   title?: Maybe<Scalars['String']>
   author?: Maybe<Scalars['String']>
 }
+
+export type User = {
+  nickname: string
+}
