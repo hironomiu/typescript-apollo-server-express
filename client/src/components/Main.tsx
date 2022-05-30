@@ -80,6 +80,7 @@ const Main = () => {
         onClick={(e) => {
           e.preventDefault()
           bookCreate()
+          setBook({})
         }}
       >
         登録
