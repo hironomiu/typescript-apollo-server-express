@@ -2,19 +2,9 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useMutation, useQuery } from '@apollo/client'
 import { useReactiveVar } from '@apollo/client'
-import {
-  isSignInVar,
-  booksVar,
-  userVar,
-  isBookModalOnVar,
-  bookVar,
-} from '../global'
+import { isSignInVar, booksVar, isBookModalOnVar, bookVar } from '../global'
 import { Book } from '../types'
-import {
-  BOOKS_QUERY,
-  SIGN_OUT_MUTATION,
-  CREATE_BOOK_MUTATION,
-} from '../queries/queries'
+import { BOOKS_QUERY, CREATE_BOOK_MUTATION } from '../queries/queries'
 import BookModal from './modal/BookModal'
 
 const Main = () => {
@@ -32,14 +22,6 @@ const Main = () => {
     },
     onError: (error) => {
       console.log(error)
-    },
-  })
-
-  const [signOut] = useMutation(SIGN_OUT_MUTATION, {
-    onCompleted: () => {
-      booksVar([])
-      userVar({ nickname: '' })
-      isSignInVar(false)
     },
   })
 

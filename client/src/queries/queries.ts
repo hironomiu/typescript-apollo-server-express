@@ -1,6 +1,7 @@
-// MEMO: 命名をHasuraと同様にUPPER_SNAKE_CASE(末尾はQUERY or MUTATION)で統一
+// MEMO: 命名をHasuraと同様にUPPER_SNAKE_CASEにする。末尾には一旦QUERY or MUTATIONを付与で統一
 import { gql } from '@apollo/client'
 
+// QUERY
 export const BOOKS_QUERY = gql`
   query {
     books {
@@ -10,6 +11,16 @@ export const BOOKS_QUERY = gql`
     }
   }
 `
+export const AUTH_CHECK_QUERY = gql`
+  query {
+    authCheck {
+      isSuccess
+      message
+      nickname
+    }
+  }
+`
+// MUTATION
 export const SIGN_IN_MUTATION = gql`
   mutation SignInMutation($email: String, $password: String) {
     signIn(email: $email, password: $password) {
@@ -24,15 +35,6 @@ export const SIGN_OUT_MUTATION = gql`
     signOut {
       isSuccess
       message
-    }
-  }
-`
-export const AUTH_CHECK_QUERY = gql`
-  query {
-    authCheck {
-      isSuccess
-      message
-      nickname
     }
   }
 `
