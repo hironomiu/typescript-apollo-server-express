@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useMutation, useLazyQuery } from '@apollo/client'
+import { useMutation, useLazyQuery, useQuery } from '@apollo/client'
 import SignOut from './SignOut'
 import { useReactiveVar } from '@apollo/client'
 import {
@@ -23,7 +23,7 @@ const Main = () => {
   // TODO: Mutationで渡すBook（一旦実装）
   const [book, setBook] = useState<Book>({})
 
-  const [, bookLazyQueryState] = useLazyQuery(BOOKS_QUERY, {
+  const bookLazyQueryState = useQuery(BOOKS_QUERY, {
     onCompleted: (data) => {
       booksVar(data.books)
     },
