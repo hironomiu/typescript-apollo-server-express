@@ -3,14 +3,16 @@ import { useNavigate } from 'react-router-dom'
 import { useMutation, useLazyQuery } from '@apollo/client'
 import SignOut from './SignOut'
 import { useReactiveVar } from '@apollo/client'
-import { isSignInVar, booksVar, userVar } from '../global'
+import { isSignInVar, booksVar, userVar, isBookModalOnVar } from '../global'
 import { Book } from '../types'
 import { BOOKS_QUERY, SignOutMutation, BookCreate } from '../queries/queries'
+import BookModal from './modal/BookModal'
 
 const Main = () => {
   const navigate = useNavigate()
   const isSignIn = useReactiveVar(isSignInVar)
   const books = useReactiveVar(booksVar)
+  const isBookModalOn = useReactiveVar(isBookModalOnVar)
 
   // TODO: Mutationで渡すBook（一旦実装）
   const [book, setBook] = useState<Book>({})
@@ -85,7 +87,9 @@ const Main = () => {
       >
         登録
       </button>
-      {isSignIn ? <SignOut signOut={signOut} /> : null}
+      <button onClick={() => isBookModalOnVar(true)}>modal on</button>
+      <SignOut signOut={signOut} />
+      {isBookModalOn ? <BookModal /> : null}
     </div>
   )
 }
