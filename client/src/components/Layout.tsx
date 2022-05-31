@@ -2,11 +2,11 @@ import { useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
 import Header from './Header'
-import { AuthCheck } from '../queries/queries'
+import { AUTH_CHECK_QUERY } from '../queries/queries'
 import { isSignInVar, userVar } from '../global'
 
 const Layout = () => {
-  const { refetch } = useQuery(AuthCheck, {
+  const { refetch } = useQuery(AUTH_CHECK_QUERY, {
     fetchPolicy: 'no-cache',
     onCompleted: (data) => {
       if (data.authCheck.isSuccess) {

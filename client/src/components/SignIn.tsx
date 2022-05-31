@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useMutation, useReactiveVar } from '@apollo/client'
 import { useNavigate } from 'react-router-dom'
-import { SignInMutation } from '../queries/queries'
+import { SIGN_IN_MUTATION } from '../queries/queries'
 import { isSignInVar, userVar } from '../global'
 
 const SignIn = () => {
@@ -10,7 +10,7 @@ const SignIn = () => {
   const isSignIn = useReactiveVar(isSignInVar)
   const navigate = useNavigate()
 
-  const [signIn] = useMutation(SignInMutation, {
+  const [signIn] = useMutation(SIGN_IN_MUTATION, {
     variables: {
       email: email,
       password: password,

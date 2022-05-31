@@ -1,9 +1,9 @@
 import { useReactiveVar, useMutation } from '@apollo/client'
 import { isSignInVar, booksVar, userVar } from '../global'
-import { SignOutMutation } from '../queries/queries'
+import { SIGN_OUT_MUTATION } from '../queries/queries'
 
 const Header = () => {
-  const [signOut] = useMutation(SignOutMutation, {
+  const [signOut] = useMutation(SIGN_OUT_MUTATION, {
     onCompleted: () => {
       // TODO: SignOutした際にMutationで取得したデータの初期化をやめるか、やり方を変える
       booksVar([])

@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useMutation, useLazyQuery, useQuery } from '@apollo/client'
-import SignOut from './SignOut'
+import { useMutation, useQuery } from '@apollo/client'
 import { useReactiveVar } from '@apollo/client'
 import {
   isSignInVar,
@@ -11,7 +10,11 @@ import {
   bookVar,
 } from '../global'
 import { Book } from '../types'
-import { BOOKS_QUERY, SignOutMutation, BookCreate } from '../queries/queries'
+import {
+  BOOKS_QUERY,
+  SIGN_OUT_MUTATION,
+  CREATE_BOOK_MUTATION,
+} from '../queries/queries'
 import BookModal from './modal/BookModal'
 
 const Main = () => {
@@ -32,7 +35,7 @@ const Main = () => {
     },
   })
 
-  const [signOut] = useMutation(SignOutMutation, {
+  const [signOut] = useMutation(SIGN_OUT_MUTATION, {
     onCompleted: () => {
       booksVar([])
       userVar({ nickname: '' })
@@ -40,8 +43,8 @@ const Main = () => {
     },
   })
 
-  // TODO: 仮で実装（命名についても要検討）
-  const [bookCreate] = useMutation(BookCreate, {
+  // TODO: 仮で実装
+  const [createBook] = useMutation(CREATE_BOOK_MUTATION, {
     variables: {
       title: book.title,
       author: book.author,
@@ -92,13 +95,12 @@ const Main = () => {
       <button
         onClick={(e) => {
           e.preventDefault()
-          bookCreate()
+          createBook()
           setBook({})
         }}
       >
         登録
       </button>
-      <SignOut signOut={signOut} />
       {isBookModalOn ? <BookModal /> : null}
     </div>
   )
