@@ -3,7 +3,13 @@ import { useNavigate } from 'react-router-dom'
 import { useMutation, useLazyQuery } from '@apollo/client'
 import SignOut from './SignOut'
 import { useReactiveVar } from '@apollo/client'
-import { isSignInVar, booksVar, userVar, isBookModalOnVar } from '../global'
+import {
+  isSignInVar,
+  booksVar,
+  userVar,
+  isBookModalOnVar,
+  bookVar,
+} from '../global'
 import { Book } from '../types'
 import { BOOKS_QUERY, SignOutMutation, BookCreate } from '../queries/queries'
 import BookModal from './modal/BookModal'
@@ -53,12 +59,17 @@ const Main = () => {
     }
   }, [isSignIn, bookLazyQueryState, navigate])
 
+  const handleClick = (book: Book) => {
+    bookVar(book)
+    isBookModalOnVar(true)
+  }
+
   return (
     <div className="flex flex-col my-4 items-center">
       <div className="my-4">
         {books
           ? books.map((book: Book) => (
-              <div key={book.id}>
+              <div key={book.id} onClick={() => handleClick(book)}>
                 タイトル：{book.title}：著者：{book.author}
               </div>
             ))
@@ -87,7 +98,6 @@ const Main = () => {
       >
         登録
       </button>
-      <button onClick={() => isBookModalOnVar(true)}>modal on</button>
       <SignOut signOut={signOut} />
       {isBookModalOn ? <BookModal /> : null}
     </div>
