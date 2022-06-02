@@ -47,6 +47,7 @@ export const query = {
     // MEMO: SignInチェック
     if (!context.user) return null
     const books = await prisma.books.findMany({
+      // MEMO: ページネーションの実装
       take: args.limit,
       skip: args.offset,
     })
