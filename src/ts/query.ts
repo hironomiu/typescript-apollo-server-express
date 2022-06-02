@@ -41,11 +41,15 @@ export const query = {
   // TODO: 型
   books: async (
     parent: any,
-    args: any,
+    args: { limit: number | undefined; offset: number | undefined },
     context: { req: any; res: Response; user: any }
   ) => {
+    // MEMO: SignInチェック
     if (!context.user) return null
-    const books = await prisma.books.findMany()
+    const books = await prisma.books.findMany({
+      take: args.limit,
+      skip: args.offset,
+    })
     return books
   },
 }

@@ -3,8 +3,8 @@ import { gql } from '@apollo/client'
 
 // QUERY
 export const BOOKS_QUERY = gql`
-  query {
-    books {
+  query ($limit: Int, $offset: Int) {
+    books(limit: $limit, offset: $offset) {
       id
       title
       author

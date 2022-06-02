@@ -17,6 +17,11 @@ const Main = () => {
   const [book, setBook] = useState<Book>({})
 
   const bookLazyQueryState = useQuery(BOOKS_QUERY, {
+    // TODO: ページネーションの実装。値は仮で設定
+    variables: {
+      limit: 3,
+      offset: 0,
+    },
     onCompleted: (data) => {
       booksVar(data.books)
     },
