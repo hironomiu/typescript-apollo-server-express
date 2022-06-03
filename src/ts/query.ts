@@ -41,16 +41,34 @@ export const query = {
   // TODO: 型
   books: async (
     parent: any,
-    args: { limit: number | undefined; offset: number | undefined },
+    args: {
+      limit: number | undefined
+      offset: number | undefined
+      title: string | undefined
+    },
     context: { req: any; res: Response; user: any }
   ) => {
     // MEMO: SignInチェック
     if (!context.user) return null
-    const books = await prisma.books.findMany({
-      // MEMO: ページネーションの実装
-      take: args.limit,
-      skip: args.offset,
-    })
-    return books
+    // MEMO: whereでtitleを指定された場合
+    // TODO: prismaでwhereに指定する際に引数がnullだったら渡さない方法がないか調べる
+    if (args.title) {
+      const books = await prisma.books.findMany({
+        // MEMO: ページネーションの実装
+        take: args.limit,
+        skip: args.offset,
+        where: {
+          title: args.title,
+        },
+      })
+      return books
+    } else {
+      const books = await prisma.books.findMany({
+        // MEMO: ページネーションの実装
+        take: args.limit,
+        skip: args.offset,
+      })
+      return books
+    }
   },
 }

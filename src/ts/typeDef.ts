@@ -29,7 +29,7 @@ export const typeDefs = gql`
     authCheck: AuthMessage
     getBookById(id: ID): Book
     getBooksByTitle(title: String): [Book]
-    books(limit: Int, offset: Int): [Book]
+    books(limit: Int, offset: Int, title: String): [Book]
   }
 
   type Mutation {
