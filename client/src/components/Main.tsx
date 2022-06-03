@@ -20,7 +20,7 @@ const Main = () => {
     // TODO: ページネーションの実装。値は仮で設定
     variables: {
       id: 0,
-      limit: 3,
+      limit: 5,
       offset: 0,
     },
     onCompleted: (data) => {
