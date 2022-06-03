@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useReactiveVar } from '@apollo/client'
 import { isBookModalOnVar, bookVar } from '../../global/index'
 import { useMutation } from '@apollo/client'
@@ -9,22 +9,26 @@ import { CREATE_UPDATE_BOOK_MUTATION } from '../../queries/queries'
 const BookModal = () => {
   const ref = useRef<HTMLButtonElement>(null!)
   const book = useReactiveVar(bookVar)
+  const [title, setTitle] = useState<string>(book.title || '')
+  const [author, setAuthor] = useState<string>(book.author || '')
+
   const [upsertBook] = useMutation(CREATE_UPDATE_BOOK_MUTATION, {
     variables: {
       id: Number(book.id),
-      title: book.title + 'update',
-      author: book.author + 'update',
+      title: title,
+      author: author,
     },
     onCompleted: (data) => {
       console.log(data)
     },
   })
-  // const dispatch = useDispatch()
-  // Cancelボタンにフォーカス
+  // MEMO: Cancelボタンにフォーカス
+  // TODO: フォーカスする場所をinputに変える
   useEffect(() => {
     ref.current.focus()
   }, [])
 
+  // TODO: デザイン
   return (
     <>
       <div
@@ -39,10 +43,20 @@ const BookModal = () => {
         <div className="bg-gray-100 rounded-lg md:max-w-md md:mx-auto p-4 fixed inset-x-0 bottom-0 z-50 mb-4 mx-4 md:relative">
           <div className="md:flex flex-col items-start w-96 h-24">
             <div className="mt-4 md:mt-0 md:mx-6 text-center md:text-left w-screen">
-              <p className="font-bold text-2xl text-gray-900">SignOut?</p>
+              <p className="font-bold text-2xl text-gray-900">Book Update</p>
             </div>
             <div>
-              {book.id}:{book.title}:{book.author}
+              <span>{book.id}</span>
+              <input
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
+              <input
+                type="text"
+                value={author}
+                onChange={(e) => setAuthor(e.target.value)}
+              />
             </div>
           </div>
           <div
