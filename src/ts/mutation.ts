@@ -71,15 +71,10 @@ export const mutation = {
     }
   ) => {
     console.log('create book called:', args)
-    // const book = await prisma.books.create({
-    //   data: {
-    //     title: args.title,
-    //     author: args.author,
-    //   },
-    // })
+
     const book = await prisma.books.upsert({
       where: {
-        id: args.id || 0,
+        id: Number(args.id) || 0,
       },
       update: {
         title: args.title,

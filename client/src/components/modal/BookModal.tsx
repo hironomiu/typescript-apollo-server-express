@@ -1,12 +1,24 @@
 import { useRef, useEffect } from 'react'
 import { useReactiveVar } from '@apollo/client'
 import { isBookModalOnVar, bookVar } from '../../global/index'
+import { useMutation } from '@apollo/client'
+import { CREATE_UPDATE_BOOK_MUTATION } from '../../queries/queries'
 
 // Memo: MessageModalと違い@headlessui/reactを使っていない（react v18で謎の挙動で上手く動作していないため）
 
 const BookModal = () => {
   const ref = useRef<HTMLButtonElement>(null!)
   const book = useReactiveVar(bookVar)
+  const [upsertBook] = useMutation(CREATE_UPDATE_BOOK_MUTATION, {
+    variables: {
+      id: Number(book.id),
+      title: book.title + 'update',
+      author: book.author + 'update',
+    },
+    onCompleted: (data) => {
+      console.log(data)
+    },
+  })
   // const dispatch = useDispatch()
   // Cancelボタンにフォーカス
   useEffect(() => {
@@ -38,14 +50,15 @@ const BookModal = () => {
             className="text-center md:text-right mt-4 md:flex md:justify-end"
           >
             <button
-              onClick={() => {
-                // dispatch(signOut())
+              onClick={(e) => {
+                e.preventDefault()
+                upsertBook()
                 isBookModalOnVar(false)
               }}
               className="block w-full md:inline-block md:w-auto px-4 py-3 md:py-2 hover:bg-gray-400 bg-gray-200 text-gray-800 rounded-lg font-semibold text-sm md:ml-2 md:order-2"
               data-testid="card-modal-update-button"
             >
-              SignOut
+              Update
             </button>
             <button
               onClick={() => isBookModalOnVar(false)}

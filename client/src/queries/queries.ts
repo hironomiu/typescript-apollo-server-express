@@ -38,9 +38,9 @@ export const SIGN_OUT_MUTATION = gql`
     }
   }
 `
-export const CREATE_BOOK_MUTATION = gql`
-  mutation BookCreate($title: String, $author: String) {
-    createBook(title: $title, author: $author) {
+export const CREATE_UPDATE_BOOK_MUTATION = gql`
+  mutation BookCreate($id: ID, $title: String, $author: String) {
+    createBook(id: $id, title: $title, author: $author) {
       isSuccess
       message
     }
