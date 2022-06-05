@@ -60,13 +60,18 @@ const Main = () => {
       <div className="my-4">
         {books
           ? books.map((book: Book) => (
-              <div key={book.id} onClick={() => handleClick(book)}>
+              <div
+                className="hover:cursor-pointer hover:scale-110"
+                key={book.id}
+                onClick={() => handleClick(book)}
+              >
                 タイトル：{book.title}：著者：{book.author}
               </div>
             ))
           : null}
       </div>
       <input
+        className="my-2"
         type="text"
         value={book.title || ''}
         onChange={(e) =>
@@ -74,6 +79,7 @@ const Main = () => {
         }
       />
       <input
+        className="my-2"
         type="text"
         value={book.author || ''}
         onChange={(e) =>
