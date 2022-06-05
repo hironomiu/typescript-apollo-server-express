@@ -41,22 +41,34 @@ const BookModal = () => {
           className="bg-black opacity-0 w-full h-full absolute z-10 inset-0"
         />
         <div className="bg-gray-100 rounded-lg md:max-w-md md:mx-auto p-4 fixed inset-x-0 bottom-0 z-50 mb-4 mx-4 md:relative">
-          <div className="md:flex flex-col items-start w-96 h-24">
+          <div className="md:flex flex-col items-start w-96 h-36">
             <div className="mt-4 md:mt-0 md:mx-6 text-center md:text-left w-screen">
               <p className="font-bold text-2xl text-gray-900">Book Update</p>
             </div>
-            <div>
-              <span>{book.id}</span>
-              <input
-                type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              />
-              <input
-                type="text"
-                value={author}
-                onChange={(e) => setAuthor(e.target.value)}
-              />
+            <div className="flex flex-col items-start justify-center ml-10">
+              <span>ID : {book.id}</span>
+              <div>
+                <label className="mr-2" htmlFor="">
+                  タイトル
+                </label>
+                <input
+                  className="my-2 w-52"
+                  type="text"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+              </div>
+              <div>
+                <label className="mr-2" htmlFor="">
+                  著　　者
+                </label>
+                <input
+                  className="w-52"
+                  type="text"
+                  value={author}
+                  onChange={(e) => setAuthor(e.target.value)}
+                />
+              </div>
             </div>
           </div>
           <div
