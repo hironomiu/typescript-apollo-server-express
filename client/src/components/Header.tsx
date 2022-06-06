@@ -1,16 +1,9 @@
-import { useReactiveVar, useMutation } from '@apollo/client'
-import { isSignInVar, booksVar, userVar } from '../global'
-import { SIGN_OUT_MUTATION } from '../queries/queries'
+import { useReactiveVar } from '@apollo/client'
+import { isSignInVar, userVar, isSignOutModsalOnVar } from '../global'
+import SignOutModal from './modal/SignOutModal'
 
 const Header = () => {
-  const [signOut] = useMutation(SIGN_OUT_MUTATION, {
-    onCompleted: () => {
-      // TODO: SignOutした際にMutationで取得したデータの初期化をやめるか、やり方を変える
-      booksVar([])
-      userVar({ nickname: '' })
-      isSignInVar(false)
-    },
-  })
+  const isSignOutModalOn = useReactiveVar(isSignOutModsalOnVar)
   const user = useReactiveVar(userVar)
   const isSignIn = useReactiveVar(isSignInVar)
   return (
@@ -23,7 +16,7 @@ const Header = () => {
             <button
               onClick={(e) => {
                 e.preventDefault()
-                signOut()
+                isSignOutModsalOnVar(true)
               }}
               className="text-2xl"
             >
@@ -32,6 +25,7 @@ const Header = () => {
           </div>
         ) : null}
       </nav>
+      {isSignOutModalOn ? <SignOutModal /> : null}
     </header>
   )
 }
