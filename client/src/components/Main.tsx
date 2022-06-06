@@ -16,7 +16,7 @@ const Main = () => {
   // TODO: Mutationで渡すBook（一旦実装）
   const [book, setBook] = useState<Book>({})
 
-  const bookLazyQueryState = useQuery(BOOKS_QUERY, {
+  const bookQueryState = useQuery(BOOKS_QUERY, {
     // TODO: ページネーションの実装。値は仮で設定
     variables: {
       id: 0,
@@ -44,11 +44,11 @@ const Main = () => {
 
   useEffect(() => {
     if (isSignIn) {
-      bookLazyQueryState.refetch().then((data) => booksVar(data.data.books))
+      bookQueryState.refetch().then((data) => booksVar(data.data.books))
     } else {
       navigate('/signin')
     }
-  }, [isSignIn, bookLazyQueryState, navigate])
+  }, [isSignIn, bookQueryState, navigate])
 
   const handleClick = (book: Book) => {
     bookVar(book)

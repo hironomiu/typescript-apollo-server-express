@@ -23,6 +23,7 @@ export const typeDefs = gql`
   type BookMessage {
     isSuccess: Boolean
     message: String
+    book: Book
   }
 
   type Query {

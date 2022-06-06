@@ -43,6 +43,11 @@ export const CREATE_UPDATE_BOOK_MUTATION = gql`
     createBook(id: $id, title: $title, author: $author) {
       isSuccess
       message
+      book {
+        id
+        title
+        author
+      }
     }
   }
 `

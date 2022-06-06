@@ -2,7 +2,6 @@ import { Response } from 'express'
 import { Request } from 'express'
 import { PrismaClient } from '@prisma/client'
 import bcrypt from 'bcrypt'
-import internal from 'stream'
 
 const prisma = new PrismaClient()
 
@@ -86,6 +85,6 @@ export const mutation = {
       },
     })
     console.log(book)
-    return { isSuccess: true, message: 'created' }
+    return { isSuccess: true, message: 'created', book: book }
   },
 }
