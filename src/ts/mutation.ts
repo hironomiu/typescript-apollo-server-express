@@ -71,15 +71,33 @@ export const mutation = {
   ) => {
     console.log('create book called:', args)
 
-    const book = await prisma.books.upsert({
-      where: {
-        id: Number(args.id) || 0,
-      },
-      update: {
+    const book = await prisma.books.create({
+      data: {
         title: args.title,
         author: args.author,
       },
-      create: {
+    })
+    console.log(book)
+    return { isSuccess: true, message: 'created', book: book }
+  },
+  // TODO: Booksの登録(insert),更新(update) -> upsert、命名をupsertに合わせる
+  updateBook: async (
+    parent: any,
+    args: { id: number; title: string; author: string },
+    context: {
+      req: Request & {
+        session: { userId: number; email: string; nickname: string }
+      }
+      res: Response
+    }
+  ) => {
+    console.log('create book called:', args)
+
+    const book = await prisma.books.update({
+      where: {
+        id: Number(args.id),
+      },
+      data: {
         title: args.title,
         author: args.author,
       },

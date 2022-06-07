@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import { useReactiveVar } from '@apollo/client'
 import { isBookModalOnVar, bookVar } from '../../global/index'
 import { useMutation } from '@apollo/client'
-import { CREATE_UPDATE_BOOK_MUTATION } from '../../queries/queries'
+import { UPDATE_BOOK_MUTATION } from '../../queries/queries'
 
 // Memo: MessageModalと違い@headlessui/reactを使っていない（react v18で謎の挙動で上手く動作していないため）
 
@@ -12,7 +12,7 @@ const BookModal = () => {
   const [title, setTitle] = useState<string>(book.title || '')
   const [author, setAuthor] = useState<string>(book.author || '')
 
-  const [upsertBook] = useMutation(CREATE_UPDATE_BOOK_MUTATION, {
+  const [upsertBook] = useMutation(UPDATE_BOOK_MUTATION, {
     variables: {
       id: Number(book.id),
       title: title,

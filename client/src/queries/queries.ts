@@ -51,3 +51,17 @@ export const CREATE_UPDATE_BOOK_MUTATION = gql`
     }
   }
 `
+
+export const UPDATE_BOOK_MUTATION = gql`
+  mutation BookUpdate($id: ID, $title: String, $author: String) {
+    updateBook(id: $id, title: $title, author: $author) {
+      isSuccess
+      message
+      book {
+        id
+        title
+        author
+      }
+    }
+  }
+`

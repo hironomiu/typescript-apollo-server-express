@@ -37,5 +37,6 @@ export const typeDefs = gql`
     signIn(email: String, password: String): AuthMessage
     signOut: AuthMessage
     createBook(id: ID, title: String, author: String): BookMessage
+    updateBook(id: ID, title: String, author: String): BookMessage
   }
 `
