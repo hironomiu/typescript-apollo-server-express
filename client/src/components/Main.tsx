@@ -32,13 +32,15 @@ const Main = () => {
   })
 
   // TODO: 仮で実装
-  const [upsertBook] = useMutation(CREATE_BOOK_MUTATION, {
+  const [createBook] = useMutation(CREATE_BOOK_MUTATION, {
     variables: {
       title: book.title,
       author: book.author,
     },
     onCompleted: (data) => {
       console.log(data)
+      // TODO: とりあえず実装（他に最新を取得する方法がある場合はそっちに変える）
+      bookQueryState.refetch().then((data) => booksVar(data.data.books))
     },
   })
 
@@ -89,7 +91,7 @@ const Main = () => {
       <button
         onClick={(e) => {
           e.preventDefault()
-          upsertBook()
+          createBook()
           setBook({})
         }}
       >
