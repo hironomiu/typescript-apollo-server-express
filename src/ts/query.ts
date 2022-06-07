@@ -50,6 +50,7 @@ export const query = {
   ) => {
     // MEMO: SignInチェック
     if (!context.user) return null
+    console.log('books called')
     // MEMO: whereでtitleを指定された場合
     // TODO: prismaでwhereに指定する際に引数がnullだったら渡さない方法がないか調べる
     if (args.title) {
@@ -60,6 +61,11 @@ export const query = {
         where: {
           title: args.title,
         },
+        orderBy: [
+          {
+            id: 'desc',
+          },
+        ],
       })
       return books
     } else {
@@ -67,6 +73,11 @@ export const query = {
         // MEMO: ページネーションの実装
         take: args.limit,
         skip: args.offset,
+        orderBy: [
+          {
+            id: 'desc',
+          },
+        ],
       })
       return books
     }

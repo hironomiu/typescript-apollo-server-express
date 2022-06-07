@@ -4,7 +4,7 @@ import { useMutation, useQuery } from '@apollo/client'
 import { useReactiveVar } from '@apollo/client'
 import { isSignInVar, booksVar, isBookModalOnVar, bookVar } from '../global'
 import { Book } from '../types'
-import { BOOKS_QUERY, CREATE_UPDATE_BOOK_MUTATION } from '../queries/queries'
+import { BOOKS_QUERY, CREATE_BOOK_MUTATION } from '../queries/queries'
 import BookModal from './modal/BookModal'
 
 const Main = () => {
@@ -32,7 +32,7 @@ const Main = () => {
   })
 
   // TODO: 仮で実装
-  const [upsertBook] = useMutation(CREATE_UPDATE_BOOK_MUTATION, {
+  const [upsertBook] = useMutation(CREATE_BOOK_MUTATION, {
     variables: {
       title: book.title,
       author: book.author,
