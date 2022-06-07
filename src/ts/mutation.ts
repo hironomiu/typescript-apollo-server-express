@@ -52,8 +52,11 @@ export const mutation = {
     context: {
       req: Request & { session: { destroy: () => void } }
       res: Response
+      user: any
     }
   ) => {
+    // MEMO: SignInチェック
+    if (!context.user) return null
     context.req.session.destroy()
     context.res.clearCookie('session')
     return { isSuccess: true, message: 'signOuted' }
@@ -61,16 +64,18 @@ export const mutation = {
   // TODO: Booksの登録(insert),更新(update) -> upsert、命名をupsertに合わせる
   createBook: async (
     parent: any,
-    args: { id: number; title: string; author: string },
+    args: { title: string; author: string },
     context: {
       req: Request & {
         session: { userId: number; email: string; nickname: string }
       }
       res: Response
+      user: any
     }
   ) => {
     console.log('create book called:', args)
-
+    // MEMO: SignInチェック
+    if (!context.user) return null
     const book = await prisma.books.create({
       data: {
         title: args.title,
@@ -89,10 +94,12 @@ export const mutation = {
         session: { userId: number; email: string; nickname: string }
       }
       res: Response
+      user: any
     }
   ) => {
     console.log('create book called:', args)
-
+    // MEMO: SignInチェック
+    if (!context.user) return null
     const book = await prisma.books.update({
       where: {
         id: Number(args.id),
