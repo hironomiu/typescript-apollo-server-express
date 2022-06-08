@@ -6,5 +6,6 @@ export const booksVar = makeVar<[]>([])
 export const userVar = makeVar<User>({ nickname: '' })
 export const isBookModalOnVar = makeVar<boolean>(false)
 export const isSignOutModsalOnVar = makeVar<boolean>(false)
+
 // MEMO: ModalにBook情報を渡す
 export const bookVar = makeVar<Book>({})

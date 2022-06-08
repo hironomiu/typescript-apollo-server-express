@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom'
 import { SIGN_IN_MUTATION } from '../queries/queries'
 import { isSignInVar, userVar } from '../global'
 
-const SignIn = () => {
+// TODO: SignUpの実装
+const SignUp = () => {
   const [email, setEmail] = useState('taro@example.com')
   const [password, setPassword] = useState('password')
   const isSignIn = useReactiveVar(isSignInVar)
@@ -67,11 +68,11 @@ const SignIn = () => {
         }}
         className="text-2xl"
       >
-        SignIn
+        SignUp
       </button>
-      <div onClick={() => navigate('/signup')}>SignUp?</div>
+      <div onClick={() => navigate('/signin')}>SignIn?</div>
     </div>
   )
 }
 
-export default SignIn
+export default SignUp
