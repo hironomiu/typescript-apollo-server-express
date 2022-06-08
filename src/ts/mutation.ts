@@ -6,6 +6,19 @@ import bcrypt from 'bcrypt'
 const prisma = new PrismaClient()
 
 export const mutation = {
+  signUp: async (
+    parent: any,
+    args: { nickname: string; email: string; password: string },
+    context: {
+      req: Request & {
+        session: { userId: number; email: string; nickname: string }
+      }
+      res: Response
+    }
+  ) => {
+    console.log('post signUp:', args)
+    return { isSuccess: true, message: 'OK', nickname: args.nickname }
+  },
   signIn: async (
     parent: any,
     args: { email: string; password: string },

@@ -21,6 +21,19 @@ export const AUTH_CHECK_QUERY = gql`
   }
 `
 // MUTATION
+export const SIGN_UP_MUTATION = gql`
+  mutation SignUpMutation(
+    $nickname: String
+    $email: String
+    $password: String
+  ) {
+    signUp(nickname: $nickname, email: $email, password: $password) {
+      isSuccess
+      message
+      nickname
+    }
+  }
+`
 export const SIGN_IN_MUTATION = gql`
   mutation SignInMutation($email: String, $password: String) {
     signIn(email: $email, password: $password) {

@@ -34,6 +34,7 @@ export const typeDefs = gql`
   }
 
   type Mutation {
+    signUp(nickname: String, email: String, password: String): AuthMessage
     signIn(email: String, password: String): AuthMessage
     signOut: AuthMessage
     createBook(title: String, author: String): BookMessage
