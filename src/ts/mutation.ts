@@ -18,13 +18,12 @@ export const mutation = {
     }
   ) => {
     console.log('post signUp:', args)
-    const hash = new Promise((resolve) =>
+    const password = await new Promise((resolve) =>
       bcrypt.hash(args.password, 10, (err, hash) => {
         if (err) return { isSuccess: false, message: 'error', nickname: '' }
         resolve(hash)
       })
     )
-    const password = await hash
     if (typeof password === 'string') {
       try {
         const user = await prisma.users.create({
