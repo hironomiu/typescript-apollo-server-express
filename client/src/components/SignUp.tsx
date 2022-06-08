@@ -25,6 +25,9 @@ const SignUp = () => {
         navigate('/signin')
         // isSignInVar(true)
         // userVar({ nickname: data.signUp.nickname })
+      } else {
+        // TODO: とりあえず実装（モーダルやフラッシュメッセージに修正する）
+        alert('error')
       }
     },
   })
