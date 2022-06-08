@@ -2,6 +2,7 @@ import { Response } from 'express'
 import { Request } from 'express'
 import { PrismaClient } from '@prisma/client'
 import bcrypt from 'bcrypt'
+import { resolve } from 'path'
 
 const prisma = new PrismaClient()
 
@@ -17,7 +18,29 @@ export const mutation = {
     }
   ) => {
     console.log('post signUp:', args)
-    return { isSuccess: true, message: 'OK', nickname: args.nickname }
+    const hash = new Promise((resolve) =>
+      bcrypt.hash(args.password, 10, (err, hash) => {
+        if (err) return { isSuccess: false, message: 'error', nickname: '' }
+        resolve(hash)
+      })
+    )
+    const password = await hash
+    if (typeof password === 'string') {
+      try {
+        const user = await prisma.users.create({
+          data: {
+            nickname: args.nickname,
+            email: args.email,
+            password: password,
+          },
+        })
+        return { isSuccess: true, message: 'OK', nickname: args.nickname }
+      } catch (error) {
+        return { isSuccess: false, message: 'error', nickname: '' }
+      }
+    } else {
+      return { isSuccess: false, message: 'error', nickname: '' }
+    }
   },
   signIn: async (
     parent: any,
