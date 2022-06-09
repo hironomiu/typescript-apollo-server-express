@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom'
 import { SIGN_UP_MUTATION } from '../queries/queries'
 import { isSignInVar } from '../global'
 
-// TODO: SignUpの実装
 const SignUp = () => {
   const [nickname, setNickname] = useState('万次郎')
   const [email, setEmail] = useState('manjiro@example.com')
@@ -23,8 +22,6 @@ const SignUp = () => {
       if (data.signUp.isSuccess) {
         console.log('success:', data.signUp.nickname)
         navigate('/signin')
-        // isSignInVar(true)
-        // userVar({ nickname: data.signUp.nickname })
       } else {
         // TODO: とりあえず実装（モーダルやフラッシュメッセージに修正する）
         alert('error')
