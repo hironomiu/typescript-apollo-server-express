@@ -27,6 +27,8 @@ create table books(
     id int not null auto_increment,
     title varchar(100) not null,
     author varchar(30) not null,
+    created_at datetime not null DEFAULT CURRENT_TIMESTAMP,
+    updated_at datetime not null DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     primary key(id)
 );
 
@@ -41,6 +43,8 @@ create table users(
   nickname varchar(100) not null,
   email varchar(100) not null,
   password varchar(100) not null,
+  created_at datetime not null DEFAULT CURRENT_TIMESTAMP,
+  updated_at datetime not null DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   primary key (id),
   unique key(email)
 );
