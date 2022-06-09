@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useMutation, useReactiveVar } from '@apollo/client'
 import { useNavigate } from 'react-router-dom'
 import { SIGN_UP_MUTATION } from '../queries/queries'
-import { isSignInVar, userVar } from '../global'
+import { isSignInVar } from '../global'
 
 // TODO: SignUpの実装
 const SignUp = () => {

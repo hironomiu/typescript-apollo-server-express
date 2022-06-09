@@ -64,7 +64,6 @@ export const CREATE_BOOK_MUTATION = gql`
     }
   }
 `
-
 export const UPDATE_BOOK_MUTATION = gql`
   mutation BookUpdate($id: ID, $title: String, $author: String) {
     updateBook(id: $id, title: $title, author: $author) {
