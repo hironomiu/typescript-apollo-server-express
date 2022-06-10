@@ -3,9 +3,8 @@ import { BrowserRouter } from 'react-router-dom'
 import { render, screen } from '@testing-library/react'
 import SignIn from '../components/SignIn'
 
-// TODO: MSWに切り替える
 const client = new ApolloClient({
-  uri: 'http://localhost:4000/graphql',
+  uri: process.env.REACT_APP_GRAPHQL_URL || 'http://localhost:4000/graphql',
   credentials: 'include',
   cache: new InMemoryCache(),
 })

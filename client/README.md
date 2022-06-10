@@ -2,6 +2,18 @@
 
 typescript-apollo-server-express のクライアント APP
 
+## SetUp
+
+```
+npm install
+```
+
+### .env
+
+| 変数名                | 設定値                                            |
+| :-------------------- | :------------------------------------------------ |
+| REACT_APP_GRAPHQL_URL | GraphQL サーバ URL(http://localhost:4000/graphql) |
+
 ## Run
 
 ```
