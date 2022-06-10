@@ -22,9 +22,15 @@ const server = setupServer(
         ctx.data({
           books: [
             {
-              author: 'テスト著者',
+              author: 'テスト著者１',
               id: 1,
-              title: 'テストタイトル',
+              title: 'テストタイトル１',
+              __typename: 'Book',
+            },
+            {
+              author: 'テスト著者２',
+              id: 2,
+              title: 'テストタイトル２',
               __typename: 'Book',
             },
           ],
@@ -70,7 +76,7 @@ describe('App', () => {
     userEvent.click(screen.getByTestId('signin'))
     expect(await screen.findByText('Header:taro')).toBeInTheDocument()
     expect(
-      await screen.findByText('タイトル：テストタイトル：著者：テスト著者')
+      await screen.findByText('タイトル：テストタイトル１：著者：テスト著者１')
     ).toBeInTheDocument()
   })
 })
