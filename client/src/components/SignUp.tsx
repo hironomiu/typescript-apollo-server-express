@@ -80,10 +80,11 @@ const SignUp = () => {
           signUp()
         }}
         className="text-2xl"
+        data-testid="signup"
       >
         SignUp
       </button>
-      <div onClick={() => navigate('/signin')} data-testid="to-signin">
+      <div onClick={() => navigate('/signin')} data-testid="change-to-signin">
         SignIn?
       </div>
     </div>

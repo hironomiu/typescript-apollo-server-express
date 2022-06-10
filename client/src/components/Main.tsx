@@ -24,6 +24,7 @@ const Main = () => {
       offset: 0,
     },
     onCompleted: (data) => {
+      console.log('books', data.books)
       booksVar(data.books)
     },
     onError: (error) => {

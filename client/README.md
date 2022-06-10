@@ -10,18 +10,26 @@ npm start
 
 ## Install Memo
 
+### create react app
+
 ```
 npx create-react-app . --template typescript
 npm install @apollo/client graphql
 ```
 
-## Tailwind
+### Tailwind
 
 [公式：](https://tailwindcss.com/docs/installation)
 
-## react-router-dom
+### react-router-dom
 
 ```
 npm install react-router-dom
 npm install --save-dev @types/react-router-dom
+```
+
+### MSW
+
+```
+npm install --save-dev msw
 ```

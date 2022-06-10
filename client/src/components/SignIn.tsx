@@ -66,10 +66,11 @@ const SignIn = () => {
           signIn()
         }}
         className="text-2xl"
+        data-testid="signin"
       >
         SignIn
       </button>
-      <div onClick={() => navigate('/signup')} data-testid="to-signup">
+      <div onClick={() => navigate('/signup')} data-testid="change-to-signup">
         SignUp?
       </div>
     </div>
