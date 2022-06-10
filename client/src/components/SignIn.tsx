@@ -69,7 +69,9 @@ const SignIn = () => {
       >
         SignIn
       </button>
-      <div onClick={() => navigate('/signup')}>SignUp?</div>
+      <div onClick={() => navigate('/signup')} data-testid="to-signup">
+        SignUp?
+      </div>
     </div>
   )
 }
