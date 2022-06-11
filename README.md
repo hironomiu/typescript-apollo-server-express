@@ -22,9 +22,12 @@ create database graphql;
 ```
 
 ```
+drop table user_books;
 drop table books;
+drop table users;
+
 create table books(
-    id int not null auto_increment,
+    id int unsigned not null auto_increment,
     title varchar(100) not null,
     author varchar(30) not null,
     created_at datetime not null DEFAULT CURRENT_TIMESTAMP,
@@ -37,7 +40,6 @@ insert into books(title,author) values
 ("衝撃的な本衝撃的な本衝撃的な本","Mike"),
 ("圧倒的な本圧倒的な本圧倒的な本","花子");
 
-drop table users;
 create table users(
   id int unsigned not null auto_increment,
   nickname varchar(100) not null,
@@ -52,6 +54,21 @@ create table users(
 insert into users(nickname,email,password) values
 ('太郎','taro@example.com','$2b$10$wFi8RBzI3EpHt6XxqxLdLO41437B8RniV6ytM6NAACNPdFbjPj3je'),
 ('花子','hanako@example.com','$2b$10$OaDQnNzHPyS4RKihI3loxuCQPogfuBz5/WYDEtvBpV0B2FTR4l0MW');
+
+
+create table user_books(
+  user_id int unsigned not null,
+  book_id int unsigned not null,
+  comment text,
+  created_at datetime not null DEFAULT CURRENT_TIMESTAMP,
+  updated_at datetime not null DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  primary key(user_id,book_id),
+  constraint user_books_fk_1 foreign key (user_id) references users (id),
+  constraint user_books_fk_2 foreign key (book_id) references books (id)
+);
+
+insert into user_books(user_id,book_id) values(1,1),(1,2),(2,1);
+
 ```
 
 ## client

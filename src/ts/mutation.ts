@@ -2,7 +2,6 @@ import { Response } from 'express'
 import { Request } from 'express'
 import { PrismaClient } from '@prisma/client'
 import bcrypt from 'bcrypt'
-import { resolve } from 'path'
 
 const prisma = new PrismaClient()
 
@@ -96,7 +95,7 @@ export const mutation = {
     context.res.clearCookie('session')
     return { isSuccess: true, message: 'signOuted' }
   },
-  // TODO: Booksの登録(insert),更新(update) -> upsert、命名をupsertに合わせる
+  // Memo: Booksの登録(create(insert))
   createBook: async (
     parent: any,
     args: { title: string; author: string },
@@ -120,7 +119,7 @@ export const mutation = {
     console.log(book)
     return { isSuccess: true, message: 'created', book: book }
   },
-  // TODO: Booksの登録(insert),更新(update) -> upsert、命名をupsertに合わせる
+  // Memo: Booksの更新(update)
   updateBook: async (
     parent: any,
     args: { id: number; title: string; author: string },
