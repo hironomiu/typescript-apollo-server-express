@@ -3,7 +3,6 @@ import Main from '../components/Main'
 import SignIn from '../components/SignIn'
 import SignUp from '../components/SignUp'
 
-// TODO: App.tsxからコンポーネントを呼び出す形で実装する
 export const routePath = [
   {
     path: '/',
