@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient, users } from '@prisma/client'
 const prisma = new PrismaClient()
 
 export const query = {
@@ -90,12 +90,14 @@ export const query = {
       offset: number | undefined
       title: string | undefined
     },
-    context: { req: any; res: Response; user: any }
+    context: { req: any; res: Response; user: users }
   ) => {
+    // MEMO: SignInチェック
+    if (!context.user) return null
     console.log('myBooks called')
     const myBooks = await prisma.user_books.findMany({
       where: {
-        user_id: 1,
+        user_id: context.user.id,
       },
 
       include: {

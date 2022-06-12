@@ -67,7 +67,7 @@ create table user_books(
   constraint user_books_fk_2 foreign key (book_id) references books (id)
 );
 
-insert into user_books(user_id,book_id) values(1,1),(1,2),(2,1);
+insert into user_books(user_id,book_id) values(1,1),(1,2),(2,1),(1,3);
 
 ```
 
