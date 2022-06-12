@@ -22,8 +22,12 @@ const MyBooks = () => {
   useEffect(() => {
     if (!isSignIn) {
       navigate('/signin')
+    } else {
+      myBooksQueryState
+        .refetch()
+        .then((data: any) => myBooksVar(data.data.myBooks))
     }
-  }, [isSignIn, navigate])
+  }, [isSignIn, navigate, myBooksQueryState])
   return (
     <div className="flex flex-col my-4 items-center">
       {myBooks
