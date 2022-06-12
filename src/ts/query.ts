@@ -88,7 +88,6 @@ export const query = {
     args: {
       limit: number | undefined
       offset: number | undefined
-      title: string | undefined
     },
     context: { req: any; res: Response; user: users }
   ) => {
@@ -96,10 +95,17 @@ export const query = {
     if (!context.user) return { edges: [], pageInfo: '' }
     console.log('myBooks called')
     const myBooks = await prisma.user_books.findMany({
+      // MEMO: ページネーションの実装
+      take: args.limit,
+      skip: args.offset,
       where: {
         user_id: context.user.id,
       },
-
+      orderBy: [
+        {
+          created_at: 'desc',
+        },
+      ],
       include: {
         users: {
           select: {

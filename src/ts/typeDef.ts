@@ -51,7 +51,7 @@ export const typeDefs = gql`
     getBookById(id: ID): Book
     getBooksByTitle(title: String): [Book]
     books(limit: Int, offset: Int, title: String): [Book]
-    myBooks(limit: Int, offset: Int, title: String): MyBooks
+    myBooks(limit: Int, offset: Int): MyBooks
   }
 
   type Mutation {
