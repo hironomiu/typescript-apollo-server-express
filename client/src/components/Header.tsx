@@ -13,7 +13,9 @@ const Header = () => {
         Header{user.nickname ? ':' + user.nickname : null}
       </div>
       <nav className="flex mr-4">
-        <Link to="/mybooks">MyBooks</Link>
+        <Link to="/mybooks" className="text-2xl mx-2">
+          MyBooks
+        </Link>
         <div className="text-2xl mr-2">Dummy</div>
         {isSignIn ? (
           <div>

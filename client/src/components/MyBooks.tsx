@@ -11,7 +11,7 @@ const MyBooks = () => {
       navigate('/signin')
     }
   }, [])
-  return <div>MyBooks</div>
+  return <div className="flex flex-col my-4 items-center">MyBooks</div>
 }
 
 export default MyBooks
