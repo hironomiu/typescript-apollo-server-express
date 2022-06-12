@@ -3,6 +3,7 @@ import { Book, User } from '../types/index'
 
 export const isSignInVar = makeVar<boolean>(false)
 export const booksVar = makeVar<[]>([])
+export const myBooksVar = makeVar<[]>([])
 export const userVar = makeVar<User>({ nickname: '' })
 export const isBookModalOnVar = makeVar<boolean>(false)
 export const isSignOutModsalOnVar = makeVar<boolean>(false)

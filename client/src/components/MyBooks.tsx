@@ -2,9 +2,10 @@ import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useReactiveVar, useQuery } from '@apollo/client'
 import { MY_BOOKS_QUERY } from '../queries/queries'
-import { isSignInVar } from '../global'
+import { isSignInVar, myBooksVar } from '../global'
 const MyBooks = () => {
   const isSignIn = useReactiveVar(isSignInVar)
+  const myBooks = useReactiveVar(myBooksVar)
   const navigate = useNavigate()
   const myBooksQueryState = useQuery(MY_BOOKS_QUERY, {
     variables: {
@@ -14,6 +15,7 @@ const MyBooks = () => {
     },
     onCompleted: (data) => {
       console.log('myBooks', data)
+      myBooksVar(data.myBooks)
     },
   })
 
@@ -22,7 +24,15 @@ const MyBooks = () => {
       navigate('/signin')
     }
   }, [isSignIn, navigate])
-  return <div className="flex flex-col my-4 items-center">MyBooks</div>
+  return (
+    <div className="flex flex-col my-4 items-center">
+      {myBooks
+        ? myBooks.map((myBook: any, index: number) => (
+            <div key={index}>{myBook.users.nickname}</div>
+          ))
+        : null}
+    </div>
+  )
 }
 
 export default MyBooks
