@@ -93,7 +93,7 @@ export const query = {
     context: { req: any; res: Response; user: users }
   ) => {
     // MEMO: SignInチェック
-    if (!context.user) return null
+    if (!context.user) return { edges: [], pageInfo: '' }
     console.log('myBooks called')
     const myBooks = await prisma.user_books.findMany({
       where: {
@@ -115,6 +115,6 @@ export const query = {
       },
     })
     console.log(myBooks)
-    return { edges: myBooks, pageinfo: 'pageinfo' }
+    return { edges: myBooks, pageInfo: 'pageInfo' }
   },
 }
