@@ -14,14 +14,17 @@ export const BOOKS_QUERY = gql`
 export const MY_BOOKS_QUERY = gql`
   query MyBooks($limit: Int, $offset: Int) {
     myBooks(limit: $limit, offset: $offset) {
-      users {
-        nickname
+      edges {
+        users {
+          nickname
+        }
+        books {
+          title
+          author
+        }
+        comment
       }
-      books {
-        title
-        author
-      }
-      comment
+      pageInfo
     }
   }
 `

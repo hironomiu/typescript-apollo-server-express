@@ -31,7 +31,7 @@ const MyBooks = () => {
   return (
     <div className="flex flex-col my-4 items-center">
       {myBooks
-        ? myBooks.map((myBook: any, index: number) => (
+        ? myBooks.edges.map((myBook: any, index: number) => (
             <div key={index}>
               {myBook.books.title}:{myBook.books.author}
             </div>

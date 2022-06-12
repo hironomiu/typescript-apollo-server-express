@@ -115,6 +115,6 @@ export const query = {
       },
     })
     console.log(myBooks)
-    return myBooks
+    return { edges: myBooks, pageinfo: 'pageinfo' }
   },
 }

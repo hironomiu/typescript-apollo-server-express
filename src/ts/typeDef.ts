@@ -15,6 +15,7 @@ export const typeDefs = gql`
     title: String
     author: String
   }
+
   type MyBook {
     comment: String
     users: BookNickname
@@ -40,12 +41,17 @@ export const typeDefs = gql`
     book: Book
   }
 
+  type MyBooks {
+    edges: [MyBook]
+    pageInfo: String
+  }
+
   type Query {
     authCheck: AuthMessage
     getBookById(id: ID): Book
     getBooksByTitle(title: String): [Book]
     books(limit: Int, offset: Int, title: String): [Book]
-    myBooks(limit: Int, offset: Int, title: String): [MyBook]
+    myBooks(limit: Int, offset: Int, title: String): MyBooks
   }
 
   type Mutation {
