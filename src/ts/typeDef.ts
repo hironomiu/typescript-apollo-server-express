@@ -7,6 +7,20 @@ export const typeDefs = gql`
     author: String
   }
 
+  type BookNickname {
+    nickname: String
+  }
+
+  type BookTitleAuthor {
+    title: String
+    author: String
+  }
+  type MyBook {
+    comment: String
+    users: BookNickname
+    books: BookTitleAuthor
+  }
+
   type User {
     id: Int
     nickname: String
@@ -31,6 +45,7 @@ export const typeDefs = gql`
     getBookById(id: ID): Book
     getBooksByTitle(title: String): [Book]
     books(limit: Int, offset: Int, title: String): [Book]
+    myBooks(limit: Int, offset: Int, title: String): [MyBook]
   }
 
   type Mutation {

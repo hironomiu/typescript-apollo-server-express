@@ -11,6 +11,20 @@ export const BOOKS_QUERY = gql`
     }
   }
 `
+export const MY_BOOKS_QUERY = gql`
+  query MyBooks($limit: Int, $offset: Int) {
+    myBooks(limit: $limit, offset: $offset) {
+      users {
+        nickname
+      }
+      books {
+        title
+        author
+      }
+      comment
+    }
+  }
+`
 export const AUTH_CHECK_QUERY = gql`
   query AuthCheck {
     authCheck {

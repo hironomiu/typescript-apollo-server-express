@@ -38,6 +38,7 @@ export const query = {
     })
     return books
   },
+
   // TODO: 型
   books: async (
     parent: any,
@@ -81,5 +82,37 @@ export const query = {
       })
       return books
     }
+  },
+  myBooks: async (
+    parent: any,
+    args: {
+      limit: number | undefined
+      offset: number | undefined
+      title: string | undefined
+    },
+    context: { req: any; res: Response; user: any }
+  ) => {
+    console.log('myBooks called')
+    const myBooks = await prisma.user_books.findMany({
+      where: {
+        user_id: 1,
+      },
+
+      include: {
+        users: {
+          select: {
+            nickname: true,
+          },
+        },
+        books: {
+          select: {
+            title: true,
+            author: true,
+          },
+        },
+      },
+    })
+    console.log(myBooks)
+    return myBooks
   },
 }
