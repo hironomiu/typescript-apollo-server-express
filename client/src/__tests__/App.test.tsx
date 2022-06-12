@@ -74,7 +74,7 @@ describe('App', () => {
     userEvent.click(screen.getByTestId('change-to-signin'))
     expect(await screen.findByText(/SignIn/i)).toBeInTheDocument()
     userEvent.click(screen.getByTestId('signin'))
-    expect(await screen.findByText('Header:taro')).toBeInTheDocument()
+    expect(await screen.findByText(':taro')).toBeInTheDocument()
     expect(
       await screen.findByText('タイトル：テストタイトル１：著者：テスト著者１')
     ).toBeInTheDocument()
