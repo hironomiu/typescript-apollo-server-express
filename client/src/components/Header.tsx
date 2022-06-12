@@ -10,7 +10,7 @@ const Header = () => {
   return (
     <header className="flex h-10 justify-between border-b-[1px] border-gray-300">
       <div className="ml-4 text-2xl">
-        Header{user.nickname ? ':' + user.nickname : null}
+        Header{user.nickname ? <Link to="/">:{user.nickname}</Link> : null}
       </div>
       <nav className="flex mr-4">
         <Link to="/mybooks" className="text-2xl mx-2">
