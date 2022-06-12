@@ -1,6 +1,7 @@
 import { useReactiveVar } from '@apollo/client'
 import { isSignInVar, userVar, isSignOutModsalOnVar } from '../global'
 import SignOutModal from './modal/SignOutModal'
+import { Link } from 'react-router-dom'
 
 const Header = () => {
   const isSignOutModalOn = useReactiveVar(isSignOutModsalOnVar)
@@ -12,6 +13,7 @@ const Header = () => {
         Header{user.nickname ? ':' + user.nickname : null}
       </div>
       <nav className="flex mr-4">
+        <Link to="/mybooks">MyBooks</Link>
         <div className="text-2xl mr-2">Dummy</div>
         {isSignIn ? (
           <div>
