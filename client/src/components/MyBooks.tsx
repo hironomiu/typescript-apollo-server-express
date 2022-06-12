@@ -32,7 +32,9 @@ const MyBooks = () => {
     <div className="flex flex-col my-4 items-center">
       {myBooks
         ? myBooks.map((myBook: any, index: number) => (
-            <div key={index}>{myBook.users.nickname}</div>
+            <div key={index}>
+              {myBook.books.title}:{myBook.books.author}
+            </div>
           ))
         : null}
     </div>
