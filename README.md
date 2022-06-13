@@ -69,11 +69,11 @@ create table user_books(
   constraint user_books_fk_2 foreign key (book_id) references books (id)
 );
 
-insert into user_books(id,user_id,book_id) values
-(uuid_to_bin(uuid(),1),1,1),
-(uuid_to_bin(uuid(),1),1,2),
-(uuid_to_bin(uuid(),1),2,1),
-(uuid_to_bin(uuid(),1),1,3);
+insert into user_books(id,user_id,book_id,comment) values
+(uuid_to_bin(uuid(),1),1,1,"comment1"),
+(uuid_to_bin(uuid(),1),1,2,"comment2"),
+(uuid_to_bin(uuid(),1),2,1,"comment3"),
+(uuid_to_bin(uuid(),1),1,3,"comment4");
 
 ```
 

@@ -108,41 +108,54 @@ export const query = {
     if (!context.user) return { edges: [], pageInfo: {} }
     console.log('myBooks called')
     // TODO: とりあえずmysql2でquery実行、これをprismaの代替で書き直す
-    const a = await connection.query(
-      'select bin_to_uuid(user_books.id,1) as uuid,nickname,title,author from user_books inner join users on (user_books.user_id = users.id) inner join books on (user_books.book_id = books.id) where user_id = ?',
+    const a: any = await connection.query(
+      `
+      select comment, bin_to_uuid(user_books.id,1) as uuid,nickname,title,author 
+      from user_books 
+      inner join users on (user_books.user_id = users.id) 
+      inner join books on (user_books.book_id = books.id) 
+      where user_id = ?
+      `,
       [context.user.id]
     )
-    console.log(a)
+    const myBooks2 = a[0].map((row: any) => ({
+      comment: row.comment,
+      users: { nickname: row.nickname },
+      books: {
+        title: row.title,
+        author: row.author,
+      },
+    }))
 
-    const myBooks = await prisma.user_books.findMany({
-      // MEMO: ページネーションの実装
-      take: args.limit,
-      skip: args.offset,
-      select: {
-        // id: true,
-        comment: true,
-        users: {
-          select: {
-            nickname: true,
-          },
-        },
-        books: {
-          select: {
-            title: true,
-            author: true,
-          },
-        },
-      },
-      where: {
-        user_id: context.user.id,
-      },
-      orderBy: [
-        {
-          id: 'asc',
-        },
-      ],
-    })
-    console.log(myBooks)
-    return { edges: myBooks, pageInfo: { endCursor: '', hasNextPage: true } }
+    // const myBooks = await prisma.user_books.findMany({
+    //   // MEMO: ページネーションの実装
+    //   take: args.limit,
+    //   skip: args.offset,
+    //   select: {
+    //     // id: true,
+    //     comment: true,
+    //     users: {
+    //       select: {
+    //         nickname: true,
+    //       },
+    //     },
+    //     books: {
+    //       select: {
+    //         title: true,
+    //         author: true,
+    //       },
+    //     },
+    //   },
+    //   where: {
+    //     user_id: context.user.id,
+    //   },
+    //   orderBy: [
+    //     {
+    //       id: 'asc',
+    //     },
+    //   ],
+    // })
+    console.log(myBooks2)
+    return { edges: myBooks2, pageInfo: { endCursor: '', hasNextPage: true } }
   },
 }
