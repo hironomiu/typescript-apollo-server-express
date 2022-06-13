@@ -1,5 +1,18 @@
 import { PrismaClient, users } from '@prisma/client'
+import mysql2 from 'mysql2/promise'
 const prisma = new PrismaClient()
+
+const options = {
+  host: process.env.DB_HOST || '127.0.0.1',
+  port: Number(process.env.DB_PORT) || 3306,
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASSWORD || 'mysql',
+  database: process.env.DB_DATABASE || 'graphql',
+  connectTimeout: 0,
+  waitForConnections: true,
+}
+
+const connection = mysql2.createPool(options)
 
 export const query = {
   // TODO: 型
@@ -94,19 +107,18 @@ export const query = {
     // MEMO: SignInチェック
     if (!context.user) return { edges: [], pageInfo: {} }
     console.log('myBooks called')
+    const a = await connection.query(
+      'select bin_to_uuid(id,1) as uuid from user_books'
+    )
+    console.log(a)
+
     const myBooks = await prisma.user_books.findMany({
       // MEMO: ページネーションの実装
       take: args.limit,
       skip: args.offset,
-      where: {
-        user_id: context.user.id,
-      },
-      orderBy: [
-        {
-          created_at: 'asc',
-        },
-      ],
-      include: {
+      select: {
+        id: true,
+        comment: true,
         users: {
           select: {
             nickname: true,
@@ -119,6 +131,14 @@ export const query = {
           },
         },
       },
+      where: {
+        user_id: context.user.id,
+      },
+      orderBy: [
+        {
+          id: 'asc',
+        },
+      ],
     })
     console.log(myBooks)
     return { edges: myBooks, pageInfo: { endCursor: '', hasNextPage: true } }

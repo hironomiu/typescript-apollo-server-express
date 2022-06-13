@@ -33,6 +33,7 @@ model sessions {
 }
 
 model user_books {
+  id         Bytes    @id @db.Binary(16)
   user_id    Int      @db.UnsignedInt
   book_id    Int      @db.UnsignedInt
   comment    String?  @db.Text
@@ -41,6 +42,6 @@ model user_books {
   books      books    @relation(fields: [book_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_books_fk_2")
   users      users    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_books_fk_1")
 
-  @@id([user_id, book_id])
+  @@unique([user_id, book_id], map: "user_id")
   @@index([book_id], map: "user_books_fk_2")
 }
