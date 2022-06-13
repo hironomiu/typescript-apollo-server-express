@@ -107,8 +107,10 @@ export const query = {
     // MEMO: SignInチェック
     if (!context.user) return { edges: [], pageInfo: {} }
     console.log('myBooks called')
+    // TODO: とりあえずmysql2でquery実行、これをprismaの代替で書き直す
     const a = await connection.query(
-      'select bin_to_uuid(id,1) as uuid from user_books'
+      'select bin_to_uuid(id,1) as uuid from user_books where user_id = ?',
+      [context.user.id]
     )
     console.log(a)
 
