@@ -109,7 +109,7 @@ export const query = {
     console.log('myBooks called')
     // TODO: とりあえずmysql2でquery実行、これをprismaの代替で書き直す
     const a = await connection.query(
-      'select bin_to_uuid(id,1) as uuid from user_books where user_id = ?',
+      'select bin_to_uuid(user_books.id,1) as uuid,nickname,title,author from user_books inner join users on (user_books.user_id = users.id) inner join books on (user_books.book_id = books.id) where user_id = ?',
       [context.user.id]
     )
     console.log(a)
@@ -119,7 +119,7 @@ export const query = {
       take: args.limit,
       skip: args.offset,
       select: {
-        id: true,
+        // id: true,
         comment: true,
         users: {
           select: {
