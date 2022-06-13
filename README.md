@@ -57,17 +57,23 @@ insert into users(nickname,email,password) values
 
 
 create table user_books(
+  id binary(16) not null,
   user_id int unsigned not null,
   book_id int unsigned not null,
   comment text,
   created_at datetime not null DEFAULT CURRENT_TIMESTAMP,
   updated_at datetime not null DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  primary key(user_id,book_id),
+  primary key(id),
+  unique key(user_id,book_id),
   constraint user_books_fk_1 foreign key (user_id) references users (id),
   constraint user_books_fk_2 foreign key (book_id) references books (id)
 );
 
-insert into user_books(user_id,book_id) values(1,1),(1,2),(2,1),(1,3);
+insert into user_books(id,user_id,book_id) values
+(uuid_to_bin(uuid(),1),1,1),
+(uuid_to_bin(uuid(),1),1,2),
+(uuid_to_bin(uuid(),1),2,1),
+(uuid_to_bin(uuid(),1),1,3);
 
 ```
 

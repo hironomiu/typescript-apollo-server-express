@@ -24,7 +24,10 @@ export const MY_BOOKS_QUERY = gql`
         }
         comment
       }
-      pageInfo
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
     }
   }
 `

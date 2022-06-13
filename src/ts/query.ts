@@ -92,7 +92,7 @@ export const query = {
     context: { req: any; res: Response; user: users }
   ) => {
     // MEMO: SignInチェック
-    if (!context.user) return { edges: [], pageInfo: '' }
+    if (!context.user) return { edges: [], pageInfo: {} }
     console.log('myBooks called')
     const myBooks = await prisma.user_books.findMany({
       // MEMO: ページネーションの実装
@@ -103,7 +103,7 @@ export const query = {
       },
       orderBy: [
         {
-          created_at: 'desc',
+          created_at: 'asc',
         },
       ],
       include: {
@@ -121,6 +121,6 @@ export const query = {
       },
     })
     console.log(myBooks)
-    return { edges: myBooks, pageInfo: 'pageInfo' }
+    return { edges: myBooks, pageInfo: { endCursor: '', hasNextPage: true } }
   },
 }

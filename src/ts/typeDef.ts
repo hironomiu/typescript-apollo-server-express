@@ -41,9 +41,14 @@ export const typeDefs = gql`
     book: Book
   }
 
+  type PageInfo {
+    endCursor: String
+    hasNextPage: Boolean
+  }
+
   type MyBooks {
     edges: [MyBook]
-    pageInfo: String
+    pageInfo: PageInfo
   }
 
   type Query {
