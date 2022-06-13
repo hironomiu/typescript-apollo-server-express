@@ -108,7 +108,7 @@ export const query = {
     if (!context.user) return { edges: [], pageInfo: {} }
     console.log('myBooks called')
     // TODO: 型、とりあえずmysql2でquery実行、これをprismaの代替で書き直す
-    const a: any = await connection.query(
+    const [rows]: any = await connection.query(
       `
       select comment, bin_to_uuid(user_books.id,1) as uuid,nickname,title,author 
       from user_books 
@@ -118,8 +118,15 @@ export const query = {
       `,
       [context.user.id]
     )
-    // TODO: 型
-    const myBooks2 = a[0].map((row: any) => ({
+
+    type Row = {
+      comment: string
+      uuid: string
+      nickname: string
+      title: string
+      author: string
+    }
+    const myBooks2 = rows.map((row: Row) => ({
       comment: row.comment,
       users: { nickname: row.nickname },
       books: {
@@ -128,7 +135,7 @@ export const query = {
       },
     }))
 
-    console.log('max:', a[0][a[0].length - 1].uuid)
+    console.log('max:', rows[rows.length - 1].uuid)
 
     // const myBooks = await prisma.user_books.findMany({
     //   // MEMO: ページネーションの実装
@@ -162,7 +169,7 @@ export const query = {
     return {
       edges: myBooks2,
       // TODO: hasNextPageのチェック
-      pageInfo: { endCursor: a[0][a[0].length - 1].uuid, hasNextPage: true },
+      pageInfo: { endCursor: rows[rows.length - 1].uuid, hasNextPage: true },
     }
   },
 }
