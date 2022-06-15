@@ -106,7 +106,7 @@ export const query = {
   ) => {
     // MEMO: SignInチェック
     if (!context.user) return { edges: [], pageInfo: {} }
-    console.log('myBooks called:', args)
+    // TODO: 型
     let rowss: any
     // TODO: NaNの時の対策
     if (typeof args.limit === 'number' && typeof args.offset === 'number') {
@@ -135,7 +135,6 @@ export const query = {
         [context.user.id]
       )
     }
-    // TODO: 型、とりあえずmysql2でquery実行、これをprismaの代替で書き直す
 
     type Row = {
       comment: string
@@ -155,37 +154,6 @@ export const query = {
       },
     }))
 
-    console.log('max:', rows[rows.length - 1].uuid)
-
-    // const myBooks = await prisma.user_books.findMany({
-    //   // MEMO: ページネーションの実装
-    //   take: args.limit,
-    //   skip: args.offset,
-    //   select: {
-    //     // id: true,
-    //     comment: true,
-    //     users: {
-    //       select: {
-    //         nickname: true,
-    //       },
-    //     },
-    //     books: {
-    //       select: {
-    //         title: true,
-    //         author: true,
-    //       },
-    //     },
-    //   },
-    //   where: {
-    //     user_id: context.user.id,
-    //   },
-    //   orderBy: [
-    //     {
-    //       id: 'asc',
-    //     },
-    //   ],
-    // })
-    console.log(myBooks2)
     return {
       edges: myBooks2,
       // TODO: hasNextPageのチェック
