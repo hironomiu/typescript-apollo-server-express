@@ -9,7 +9,7 @@ const MyBooks = () => {
   const navigate = useNavigate()
   const myBooksQueryState = useQuery(MY_BOOKS_QUERY, {
     variables: {
-      limit: 1,
+      limit: 3,
       offset: 0,
     },
     onCompleted: (data) => {
@@ -32,7 +32,7 @@ const MyBooks = () => {
       {myBooks
         ? myBooks.edges.map((myBook: any, index: number) => (
             <div key={index}>
-              {myBook.books.title}:{myBook.books.author}
+              {myBook.books.title}:{myBook.books.author}:{myBook.comment}
             </div>
           ))
         : null}
