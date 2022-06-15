@@ -9,7 +9,7 @@ const MyBooks = () => {
   const navigate = useNavigate()
   const myBooksQueryState = useQuery(MY_BOOKS_QUERY, {
     variables: {
-      limit: 5,
+      limit: 1,
       offset: 0,
     },
     onCompleted: (data) => {

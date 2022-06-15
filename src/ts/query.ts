@@ -106,18 +106,36 @@ export const query = {
   ) => {
     // MEMO: SignInチェック
     if (!context.user) return { edges: [], pageInfo: {} }
-    console.log('myBooks called')
+    console.log('myBooks called:', args)
+    let rowss: any
+    // TODO: NaNの時の対策
+    if (typeof args.limit === 'number' && typeof args.offset === 'number') {
+      console.log('calleddddd')
+      rowss = await connection.query(
+        `
+        select comment, bin_to_uuid(user_books.id,1) as uuid,nickname,title,author 
+        from user_books 
+        inner join users on (user_books.user_id = users.id) 
+        inner join books on (user_books.book_id = books.id) 
+        where user_id = ?
+        limit ?
+        offset ?
+        `,
+        [context.user.id, args.limit, args.offset]
+      )
+    } else {
+      rowss = await connection.query(
+        `
+        select comment, bin_to_uuid(user_books.id,1) as uuid,nickname,title,author 
+        from user_books 
+        inner join users on (user_books.user_id = users.id) 
+        inner join books on (user_books.book_id = books.id) 
+        where user_id = ?
+        `,
+        [context.user.id]
+      )
+    }
     // TODO: 型、とりあえずmysql2でquery実行、これをprismaの代替で書き直す
-    const [rows]: any = await connection.query(
-      `
-      select comment, bin_to_uuid(user_books.id,1) as uuid,nickname,title,author 
-      from user_books 
-      inner join users on (user_books.user_id = users.id) 
-      inner join books on (user_books.book_id = books.id) 
-      where user_id = ?
-      `,
-      [context.user.id]
-    )
 
     type Row = {
       comment: string
@@ -126,6 +144,8 @@ export const query = {
       title: string
       author: string
     }
+    const rows: Row[] = rowss[0]
+
     const myBooks2 = rows.map((row: Row) => ({
       comment: row.comment,
       users: { nickname: row.nickname },
