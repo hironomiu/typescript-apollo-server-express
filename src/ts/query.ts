@@ -154,10 +154,21 @@ export const query = {
       },
     }))
 
+    // MEMO: hasNextPage次ページがあるかチェック
+    // TODO: 型
+    const hasNextPageCount: any = await connection.query(
+      `
+      select count(*) as cnt from user_books where id >  uuid_to_bin(?,1) and user_id = ?
+      `,
+      [rows[rows.length - 1].uuid, context.user.id]
+    )
+
     return {
       edges: myBooks2,
-      // TODO: hasNextPageのチェック
-      pageInfo: { endCursor: rows[rows.length - 1].uuid, hasNextPage: true },
+      pageInfo: {
+        endCursor: rows[rows.length - 1].uuid,
+        hasNextPage: !!hasNextPageCount[0][0].cnt,
+      },
     }
   },
 }
