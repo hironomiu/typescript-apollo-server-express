@@ -5,8 +5,8 @@ import { SIGN_IN_MUTATION } from '../queries/queries'
 import { isSignInVar, userVar } from '../global'
 
 const SignIn = () => {
-  const [email, setEmail] = useState('taro@example.com')
-  const [password, setPassword] = useState('password')
+  const [email, setEmail] = useState<string>('taro@example.com')
+  const [password, setPassword] = useState<string>('password')
   const isSignIn = useReactiveVar(isSignInVar)
   const navigate = useNavigate()
 
@@ -44,7 +44,9 @@ const SignIn = () => {
             className="h-8 px-2"
             type="text"
             value={email}
-            onChange={(e) => setEmail((_prev: any) => (_prev = e.target.value))}
+            onChange={(e) =>
+              setEmail((_prev: string) => (_prev = e.target.value))
+            }
           />
         </div>
         <div className="items-start my-2">
@@ -54,7 +56,7 @@ const SignIn = () => {
             type="password"
             value={password}
             onChange={(e) =>
-              setPassword((_prev: any) => (_prev = e.target.value))
+              setPassword((_prev: string) => (_prev = e.target.value))
             }
           />
         </div>

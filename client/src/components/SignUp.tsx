@@ -5,9 +5,9 @@ import { SIGN_UP_MUTATION } from '../queries/queries'
 import { isSignInVar } from '../global'
 
 const SignUp = () => {
-  const [nickname, setNickname] = useState('万次郎')
-  const [email, setEmail] = useState('manjiro@example.com')
-  const [password, setPassword] = useState('password')
+  const [nickname, setNickname] = useState<string>('万次郎')
+  const [email, setEmail] = useState<string>('manjiro@example.com')
+  const [password, setPassword] = useState<string>('password')
   const isSignIn = useReactiveVar(isSignInVar)
   const navigate = useNavigate()
 
@@ -46,7 +46,7 @@ const SignUp = () => {
             type="text"
             value={nickname}
             onChange={(e) =>
-              setNickname((_prev: any) => (_prev = e.target.value))
+              setNickname((_prev: string) => (_prev = e.target.value))
             }
           />
         </div>
@@ -58,7 +58,9 @@ const SignUp = () => {
             className="h-8 px-2"
             type="text"
             value={email}
-            onChange={(e) => setEmail((_prev: any) => (_prev = e.target.value))}
+            onChange={(e) =>
+              setEmail((_prev: string) => (_prev = e.target.value))
+            }
           />
         </div>
         <div className="items-start my-2">
@@ -68,7 +70,7 @@ const SignUp = () => {
             type="password"
             value={password}
             onChange={(e) =>
-              setPassword((_prev: any) => (_prev = e.target.value))
+              setPassword((_prev: string) => (_prev = e.target.value))
             }
           />
         </div>
