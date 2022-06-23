@@ -21,14 +21,17 @@ afterAll(() => {
 describe('App', () => {
   it('renders learn react link', async () => {
     render(<App />)
-    expect(await screen.findByText(/Header/i)).toBeInTheDocument()
-    const linkElement = screen.getByText(/SignIn/i)
-    expect(linkElement).toBeInTheDocument()
+    expect(screen.getByText('Header')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'SignIn' })).toBeInTheDocument()
     userEvent.click(screen.getByTestId('change-to-signup'))
-    expect(await screen.findByText(/SignUp/i)).toBeInTheDocument()
+    expect(
+      await screen.findByRole('button', { name: 'SignUp' })
+    ).toBeInTheDocument()
     userEvent.click(screen.getByTestId('change-to-signin'))
-    expect(await screen.findByText(/SignIn/i)).toBeInTheDocument()
-    userEvent.click(screen.getByTestId('signin'))
+    expect(
+      await screen.findByRole('button', { name: 'SignIn' })
+    ).toBeInTheDocument()
+    userEvent.click(screen.getByTestId('signin-button'))
     expect(await screen.findByText(':taro')).toBeInTheDocument()
     expect(
       await screen.findByText('タイトル：テストタイトル１：著者：テスト著者１')

@@ -68,7 +68,7 @@ const SignIn = () => {
           signIn()
         }}
         className="text-2xl"
-        data-testid="signin"
+        data-testid="signin-button"
       >
         SignIn
       </button>

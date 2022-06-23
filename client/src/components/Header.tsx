@@ -13,13 +13,15 @@ const Header = () => {
         Header{user.nickname ? <Link to="/">:{user.nickname}</Link> : null}
       </div>
       <nav className="flex mr-4">
-        <Link
-          to="/mybooks"
-          className="text-2xl mx-2"
-          data-testid="my-books-link"
-        >
-          MyBooks
-        </Link>
+        {isSignIn ? (
+          <Link
+            to="/mybooks"
+            className="text-2xl mx-2"
+            data-testid="my-books-link"
+          >
+            MyBooks
+          </Link>
+        ) : null}
         <div className="text-2xl mr-2">Dummy</div>
         {isSignIn ? (
           <div>

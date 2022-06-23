@@ -10,9 +10,9 @@ describe('Header', () => {
       </BrowserRouter>
     )
     expect(screen.getByText('Header')).toBeInTheDocument()
-    // MEMO: getByRole
-    expect(screen.getByRole('link', { name: 'MyBooks' })).toBeInTheDocument()
-    // MEMO: getByTestId
-    expect(screen.getByTestId('my-books-link')).toBeInTheDocument()
+    // MEMO: getByRole SignIn前なので存在しない
+    expect(screen.queryByRole('link', { name: 'MyBooks' })).toBeNull()
+    // MEMO: getByTestId SignIn前なので存在しない
+    expect(screen.queryByTestId('my-books-link')).toBeNull()
   })
 })
