@@ -10,5 +10,9 @@ describe('Header', () => {
       </BrowserRouter>
     )
     expect(screen.getByText('Header')).toBeInTheDocument()
+    // MEMO: getByRole
+    expect(screen.getByRole('link', { name: 'MyBooks' })).toBeInTheDocument()
+    // MEMO: getByTestId
+    expect(screen.getByTestId('my-books-link')).toBeInTheDocument()
   })
 })
