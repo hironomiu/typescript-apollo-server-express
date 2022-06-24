@@ -13,6 +13,16 @@ export const handler = [
       })
     )
   }),
+  graphql.mutation('SignOutMutation', (req, res, ctx) => {
+    return res(
+      ctx.data({
+        signIn: {
+          isSuccess: true,
+          message: 'signOuted',
+        },
+      })
+    )
+  }),
   graphql.query('Books', (req, res, ctx) => {
     return res(
       ctx.data({

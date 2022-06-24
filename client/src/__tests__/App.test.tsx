@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, cleanup } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { setupServer } from 'msw/node'
 import { handler } from '../mock/handler'
@@ -12,19 +12,14 @@ beforeAll(() => {
 
 afterEach(() => {
   server.resetHandlers()
+  cleanup()
 })
 
 afterAll(() => {
   server.close()
 })
 
-describe('App', () => {
-  // TODO: SignInをtypeから行う
-  it('type', async () => {
-    render(<App />)
-    userEvent.type(screen.getByTestId('email-input'), 'taro@example.com')
-    userEvent.type(screen.getByTestId('password-input'), 'password')
-  })
+describe('first', () => {
   it('renders learn react link', async () => {
     render(<App />)
     expect(screen.getByText('Header')).toBeInTheDocument()

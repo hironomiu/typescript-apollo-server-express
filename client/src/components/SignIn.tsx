@@ -5,8 +5,8 @@ import { SIGN_IN_MUTATION } from '../queries/queries'
 import { isSignInVar, userVar } from '../global'
 
 const SignIn = () => {
-  const [email, setEmail] = useState<string>('taro@example.com')
-  const [password, setPassword] = useState<string>('password')
+  const [email, setEmail] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
   const isSignIn = useReactiveVar(isSignInVar)
   const navigate = useNavigate()
 
