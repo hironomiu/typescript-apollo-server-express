@@ -1,5 +1,4 @@
-import { Response } from 'express'
-import { Request } from 'express'
+import { Response, Request } from 'express'
 import { PrismaClient } from '@prisma/client'
 import bcrypt from 'bcrypt'
 
