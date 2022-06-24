@@ -19,6 +19,12 @@ afterAll(() => {
 })
 
 describe('App', () => {
+  // TODO: SignInをtypeから行う
+  it('type', async () => {
+    render(<App />)
+    userEvent.type(screen.getByTestId('email-input'), 'taro@example.com')
+    userEvent.type(screen.getByTestId('password-input'), 'password')
+  })
   it('renders learn react link', async () => {
     render(<App />)
     expect(screen.getByText('Header')).toBeInTheDocument()

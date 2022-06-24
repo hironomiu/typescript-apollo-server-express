@@ -44,6 +44,7 @@ const SignIn = () => {
             className="h-8 px-2"
             type="text"
             value={email}
+            data-testid="email-input"
             onChange={(e) =>
               setEmail((_prev: string) => (_prev = e.target.value))
             }
@@ -55,6 +56,7 @@ const SignIn = () => {
             className="h-8 px-2"
             type="password"
             value={password}
+            data-testid="password-input"
             onChange={(e) =>
               setPassword((_prev: string) => (_prev = e.target.value))
             }
