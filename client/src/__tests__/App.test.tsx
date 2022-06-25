@@ -33,7 +33,7 @@ describe('App', () => {
       await screen.findByRole('button', { name: 'SignIn' })
     ).toBeInTheDocument()
     userEvent.click(screen.getByTestId('signin-button'))
-    expect(await screen.findByText(':taro')).toBeInTheDocument()
+    expect(await screen.findByText('taro')).toBeInTheDocument()
     expect(
       await screen.findByText('タイトル：テストタイトル１：著者：テスト著者１')
     ).toBeInTheDocument()

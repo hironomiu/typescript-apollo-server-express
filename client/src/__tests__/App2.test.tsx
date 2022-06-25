@@ -26,7 +26,7 @@ describe('App', () => {
     userEvent.type(screen.getByTestId('email-input'), 'taro@example.com')
     userEvent.type(screen.getByTestId('password-input'), 'password')
     userEvent.click(screen.getByRole('button', { name: 'SignIn' }))
-    expect(await screen.findByText(':taro')).toBeInTheDocument()
+    expect(await screen.findByText('taro')).toBeInTheDocument()
     userEvent.click(screen.getByRole('button', { name: 'SignOut!' }))
     userEvent.click(screen.getByTestId('signout-modal-signout-button'))
   })

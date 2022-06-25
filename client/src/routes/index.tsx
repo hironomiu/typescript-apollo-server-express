@@ -1,6 +1,7 @@
 import Layout from '../components/Layout'
 import Main from '../components/Main'
 import MyBooks from '../components/MyBooks'
+import Profile from '../components/Profile'
 import SignIn from '../components/SignIn'
 import SignUp from '../components/SignUp'
 
@@ -13,6 +14,10 @@ export const routePath = [
         path: '/',
         element: <Main />,
         children: [],
+      },
+      {
+        path: '/profile',
+        element: <Profile />,
       },
       {
         path: '/mybooks',

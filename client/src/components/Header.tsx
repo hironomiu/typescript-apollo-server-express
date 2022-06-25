@@ -10,7 +10,15 @@ const Header = () => {
   return (
     <header className="flex h-10 justify-between border-b-[1px] border-gray-300">
       <div className="ml-4 text-2xl">
-        Header{user.nickname ? <Link to="/">:{user.nickname}</Link> : null}
+        {user.nickname ? (
+          <>
+            <Link to="/">Header</Link>
+            <span>:</span>
+            <Link to="/profile">{user.nickname}</Link>
+          </>
+        ) : (
+          'Header'
+        )}
       </div>
       <nav className="flex mr-4">
         {isSignIn ? (
