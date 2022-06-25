@@ -44,7 +44,12 @@ export const mutation = {
     args: { email: string; password: string },
     context: {
       req: Request & {
-        session: { userId: number; email: string; nickname: string }
+        session: {
+          userId: number
+          email: string
+          nickname: string
+          isAdmin: boolean
+        }
       }
       res: Response
     }
@@ -74,6 +79,16 @@ export const mutation = {
       context.req.session.userId = user.id
       context.req.session.email = user.email
       context.req.session.nickname = user.nickname
+      // MEMO: ADMIN チェック
+      const adminCount = await prisma.user_roles.count({
+        where: {
+          user_id: user.id,
+        },
+      })
+      console.log('adminCount:', adminCount)
+      if (adminCount > 0) {
+        context.req.session.isAdmin = true
+      }
       return { isSuccess: true, message: 'success', nickname: user.nickname }
     }
 

@@ -22,6 +22,8 @@ create database graphql;
 ```
 
 ```
+drop table user_roles;
+drop table roles;
 drop table user_books;
 drop table books;
 drop table users;
@@ -137,7 +139,7 @@ npx prisma generate
 reset
 
 ```
-prisma migrate reset
+npx prisma migrate reset
 ```
 
 migrate
