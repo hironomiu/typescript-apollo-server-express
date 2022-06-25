@@ -40,6 +40,17 @@ insert into books(title,author) values
 ("衝撃的な本衝撃的な本衝撃的な本","Mike"),
 ("圧倒的な本圧倒的な本圧倒的な本","花子");
 
+create table roles(
+  id int unsigned not null auto_increment,
+  role varchar(100) not null,
+  created_at datetime not null DEFAULT CURRENT_TIMESTAMP,
+  updated_at datetime not null DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  primary key (id),
+  unique key(role)
+);
+
+insert into roles(id,role) values(1,"ADMIN");
+
 create table users(
   id int unsigned not null auto_increment,
   nickname varchar(100) not null,
@@ -55,6 +66,19 @@ insert into users(nickname,email,password) values
 ('太郎','taro@example.com','$2b$10$wFi8RBzI3EpHt6XxqxLdLO41437B8RniV6ytM6NAACNPdFbjPj3je'),
 ('花子','hanako@example.com','$2b$10$OaDQnNzHPyS4RKihI3loxuCQPogfuBz5/WYDEtvBpV0B2FTR4l0MW');
 
+create table user_roles(
+  id int unsigned not null auto_increment,
+  user_id int unsigned not null,
+  role_id int unsigned not null,
+  created_at datetime not null DEFAULT CURRENT_TIMESTAMP,
+  updated_at datetime not null DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  primary key(id),
+  unique key(user_id,role_id),
+  constraint user_roles_fk_1 foreign key (user_id) references users (id),
+  constraint user_roles_fk_2 foreign key (role_id) references roles (id)
+);
+
+insert into user_roles(user_id,role_id) values(1,1);
 
 create table user_books(
   id binary(16) not null,

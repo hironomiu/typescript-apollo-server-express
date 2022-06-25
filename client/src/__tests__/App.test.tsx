@@ -19,8 +19,8 @@ afterAll(() => {
   server.close()
 })
 
-describe('first', () => {
-  it('renders learn react link', async () => {
+describe('App', () => {
+  it('App表示からSignIn、SingUp、SignInに遷移しSignInし表示の確認', async () => {
     render(<App />)
     expect(screen.getByText('Header')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'SignIn' })).toBeInTheDocument()
