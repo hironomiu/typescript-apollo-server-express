@@ -49,19 +49,13 @@ export const typeDefs = gql`
     email: String
   }
 
-  type UserMessage {
-    isSuccess: Boolean
-    message: String
-    userInfo: User
-  }
-
   type Query {
     authCheck: AuthMessage
     getBookById(id: ID): Book
     getBooksByTitle(title: String): [Book]
     books(limit: Int, offset: Int, title: String): [Book]
     myBooks(limit: Int, offset: Int): MyBooks
-    users: UserMessage
+    users: User
   }
 
   type Mutation {

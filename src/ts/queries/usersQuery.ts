@@ -1,5 +1,7 @@
+import { PrismaClient } from '@prisma/client'
+const prisma = new PrismaClient()
 export const usersQuery = {
-  // TODO: 型
+  // TODO: 型、とりあえず実装（プロフィールを返すものとAdminがユーザ一覧を返すものをわける）
   users: async (
     parent: any,
     args: any,
@@ -17,13 +19,16 @@ export const usersQuery = {
     }
   ) => {
     // MEMO: SignInチェック
-    if (!context.user)
-      return { isSuccess: false, message: 'error', users: null }
+    if (!context.user) return { users: null }
     // MEMO: Adminのチェック
+    const user = await prisma.users.findUnique({
+      where: { id: context.req.session.userId },
+    })
+    console.log(user)
     if (context.req.session.isAdmin) {
-      return { isSuccess: true, message: 'admin', users: null }
+      return { nickname: user?.nickname, email: user?.email }
     } else {
-      return { isSuccess: true, message: 'common', users: null }
+      return { nickname: user?.nickname, email: user?.email }
     }
   },
 }
