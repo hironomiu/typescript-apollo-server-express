@@ -86,8 +86,12 @@ export const mutation = {
         },
       })
       console.log('adminCount:', adminCount)
+
       if (adminCount > 0) {
+        console.log('called')
         context.req.session.isAdmin = true
+      } else {
+        context.req.session.isAdmin = false
       }
       return { isSuccess: true, message: 'success', nickname: user.nickname }
     }

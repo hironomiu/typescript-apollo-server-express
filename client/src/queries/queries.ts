@@ -2,6 +2,14 @@
 import { gql } from '@apollo/client'
 
 // QUERY
+export const USERS_QUERY = gql`
+  query Users {
+    users {
+      isSuccess
+      message
+    }
+  }
+`
 export const BOOKS_QUERY = gql`
   query Books($limit: Int, $offset: Int) {
     books(limit: $limit, offset: $offset) {
@@ -64,7 +72,7 @@ export const SIGN_IN_MUTATION = gql`
   }
 `
 export const SIGN_OUT_MUTATION = gql`
-  mutation SignOutMutation{
+  mutation SignOutMutation {
     signOut {
       isSuccess
       message

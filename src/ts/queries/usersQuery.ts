@@ -15,10 +15,11 @@ export const usersQuery = {
       res: Response
     }
   ) => {
+    // MEMO: Adminのチェック
     if (context.req.session.isAdmin) {
       return { isSuccess: true, message: 'admin' }
     } else {
-      return { isSuccess: false, message: 'error' }
+      return { isSuccess: true, message: 'common' }
     }
   },
 }
