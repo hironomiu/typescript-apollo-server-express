@@ -13,13 +13,17 @@ export const usersQuery = {
         }
       }
       res: Response
+      user: any
     }
   ) => {
+    // MEMO: SignInチェック
+    if (!context.user)
+      return { isSuccess: false, message: 'error', users: null }
     // MEMO: Adminのチェック
     if (context.req.session.isAdmin) {
-      return { isSuccess: true, message: 'admin' }
+      return { isSuccess: true, message: 'admin', users: null }
     } else {
-      return { isSuccess: true, message: 'common' }
+      return { isSuccess: true, message: 'common', users: null }
     }
   },
 }

@@ -22,13 +22,6 @@ export const typeDefs = gql`
     books: BookTitleAuthor
   }
 
-  type User {
-    id: Int
-    nickname: String
-    email: String
-    password: String
-  }
-
   type AuthMessage {
     isSuccess: Boolean
     message: String
@@ -51,10 +44,17 @@ export const typeDefs = gql`
     pageInfo: PageInfo
   }
 
+  type User {
+    nickname: String
+    email: String
+  }
+
   type UserMessage {
     isSuccess: Boolean
     message: String
+    userInfo: User
   }
+
   type Query {
     authCheck: AuthMessage
     getBookById(id: ID): Book
